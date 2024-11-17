@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { register } from "../controllers/users";
+import { login, register } from "../controllers/users";
 
 export default (router: Router): void => {
     router.post('/register', register);
+    router.post('/login', login);
 };

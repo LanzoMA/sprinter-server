@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
-import { createUser } from '../db/services/users';
+import { createUser, getUserByEmail } from '../db/services/users';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
@@ -21,7 +21,38 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-// Todo: Login controller
+export const login = async (req: Request, res: Response): Promise<void> => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        res.status(400).send('Email/password was not given');
+        return;
+    }
+
+    try {
+        const user = await getUserByEmail(email);
+
+        if (!user) {
+            res.status(401).send('Credentials were incorrect');
+            return;
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordCorrect) {
+            res.status(401).send('Credentials were incorrect');
+            return;
+        }
+
+        // Todo: JWT Tokens
+        res.json({
+            message: 'Successfully logged in',
+        });
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 // Todo: Update email controller
 // Todo: Update username controller
 // Todo: Update password controller

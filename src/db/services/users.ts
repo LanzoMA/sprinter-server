@@ -8,6 +8,26 @@ export const createUser = async (user: UserInput): Promise<void> => {
     }
 };
 
+export const getUserByEmail = async (email: string): Promise<UserInput | undefined> => {
+    try {
+        const user = await User.findOne({ email }).exec();
+
+        if (!user) {
+            console.error('User not found');
+            throw Error('User not found');
+        }
+
+        return {
+            email: user.email,
+            username: user.username,
+            password: user.password,
+        }
+
+    } catch (error) {
+        console.error('Error getting user');
+    }
+}
+
 export const updateUserEmail = async (email: string, newEmail: string): Promise<void> => {
     try {
         await User.updateOne({ email }, { email: newEmail }).exec();
