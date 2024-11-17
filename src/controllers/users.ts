@@ -6,7 +6,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
 
     if (!email || !username || !password) {
-        res.send('Email/username/password not given');
+        res.status(400).send('Email/username/password not given');
         return;
     }
 
@@ -17,7 +17,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         res.send('Successfully created user');
     } catch (error) {
         console.error(error);
-        res.send(error);
+        res.status(400).send(error);
     }
 };
 
