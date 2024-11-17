@@ -10,7 +10,7 @@ export const createUser = async (user: UserInput): Promise<void> => {
 
 export const updateUserEmail = async (email: string, newEmail: string): Promise<void> => {
     try {
-        await User.updateOne({ email: email }, { email: newEmail }).exec();
+        await User.updateOne({ email }, { email: newEmail }).exec();
     } catch (error) {
         throw Error('Error updating user email');
     }
