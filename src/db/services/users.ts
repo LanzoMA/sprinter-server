@@ -8,19 +8,19 @@ export const createUser = async (user: UserInput): Promise<void> => {
     }
 };
 
-export const changeUserEmail = async (oldEmail: string, newEmail: string): Promise<void> => {
+export const updateUserEmail = async (email: string, newEmail: string): Promise<void> => {
     try {
-        await User.updateOne({ email: oldEmail }, { email: newEmail }).exec();
+        await User.updateOne({ email: email }, { email: newEmail }).exec();
     } catch (error) {
         throw Error('Error updating user email');
     }
 };
 
-export const changeUserPassword = async (email: string, password: string): Promise<void> => {
+export const updateUserPassword = async (email: string, password: string): Promise<void> => {
     try {
         await User.updateOne({ email }, { password }).exec();
     } catch (error) {
-        throw Error('Error updateing password');
+        throw Error('Error updating password');
     }
 };
 
