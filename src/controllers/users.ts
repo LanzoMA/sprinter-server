@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { createUser, getUserByEmail } from '../db/services/users';
 
@@ -12,12 +13,17 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const accessToken = jwt.sign({ email, username }, process.env.ACCESS_TOKEN_SECRET as string);
+
     try {
         await createUser({ email, username, password: hashedPassword });
-        res.send('Successfully created user');
+        res.json({
+            message: 'Successfully created user',
+            accessToken,
+        });
     } catch (error) {
         console.error(error);
-        res.status(400).send(error);
+        res.status(400).send('Account already registered with that email');
     }
 };
 
@@ -44,9 +50,11 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
-        // Todo: JWT Tokens
+        const accessToken = jwt.sign({ email, username: user.username }, process.env.ACCESS_TOKEN_SECRET as string);
+
         res.json({
             message: 'Successfully logged in',
+            accessToken,
         });
     } catch (error) {
         console.error(error);
