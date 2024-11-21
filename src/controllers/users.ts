@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
-import { createUser, getUserByEmail } from '../db/services/users';
+import { createUser, getUserByEmail, updateUserEmail } from '../db/services/users';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
@@ -61,7 +61,29 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-// Todo: Update email controller
+export const updateEmail = async (req: Request, res: Response): Promise<void> => {
+    const user = req.body.user;
+    const { email } = req.body;
+
+    if (!email) {
+        res.status(400).send('Email was not provided');
+        return;
+    }
+
+    if (email === user.email) {
+        res.status(400).send('New email is the same as the old email');
+        return;
+    }
+
+    try {
+        await updateUserEmail(user.email, email);
+        res.status(201).send('Successfully changed email');
+    } catch (error) {
+        console.error(error);
+        res.status(400).send('Error updating user email');
+    }
+};
+
 // Todo: Update username controller
 // Todo: Update password controller
 // Todo: Update profile picture controller
