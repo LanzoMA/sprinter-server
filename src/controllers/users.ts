@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
-import { createUser, getUserByEmail, updateUserEmail, updateUserPassword } from '../db/services/users';
+import { createUser, deleteUser, getUserByEmail, updateUserEmail, updateUserPassword } from '../db/services/users';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
@@ -127,4 +127,15 @@ export const updatePassword = async (req: Request, res: Response): Promise<void>
 // Todo: Update profile picture controller
 // Todo: Update courses controller
 // Todo: Update achievements controller
-// Todo: Delete account controller
+
+export const deleteAccount = async (req: Request, res: Response): Promise<void> => {
+    const { email } = req.body.user;
+
+    try {
+        await deleteUser(email);
+        res.status(200).send('Successfully deleted user');
+    } catch (error) {
+        console.error(error);
+        res.status(400).send('Error deleting user');
+    }
+};
