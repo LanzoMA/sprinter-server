@@ -125,8 +125,6 @@ export const updatePassword = async (req: Request, res: Response): Promise<void>
 };
 
 // Todo: Update profile picture controller
-// Todo: Update courses controller
-// Todo: Update achievements controller
 
 export const deleteAccount = async (req: Request, res: Response): Promise<void> => {
     const { email } = req.body.user;
