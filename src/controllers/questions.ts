@@ -9,15 +9,21 @@ export const createQuestionHandler = async (req: Request, res: Response): Promis
         return;
     }
 
-    await createQuestion({
-        question,
-        markScheme,
-        course,
-        year,
-        questionNumber,
-        totalMarks,
-        author,
-    });
+    try {
+        await createQuestion({
+            question,
+            markScheme,
+            course,
+            year,
+            questionNumber,
+            totalMarks,
+            author,
+        });
+        res.sendStatus(201);
+    } catch (error) {
+        console.error('Error creating question:', error);
+        res.status(400).send('Error creating question');
+    }
 };
 
 export const getQuestionByIdHandler = async (req: Response, res: Response): Promise<void> => {
