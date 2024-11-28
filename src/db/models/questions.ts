@@ -19,7 +19,7 @@ interface QuestionDocument extends Document, QuestionInput {
 const questionSchema: Schema<QuestionDocument> = new Schema<QuestionDocument>({
     question: { type: String, required: true },
     markScheme: { type: String, required: true },
-    course: { type: String, required: true },
+    course: { type: Schema.Types.ObjectId, required: true },
     year: { type: Number },
     questionNumber: { type: Number },
     totalMarks: { type: Number, required: true },
