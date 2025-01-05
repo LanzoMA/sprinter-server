@@ -1,12 +1,15 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
 
 interface CommentInput {
-    user: Schema.Types.ObjectId;
-    question: Schema.Types.ObjectId;
+    userId: string;
+    questionId: string;
     comment: string;
 }
 
-interface CommentDocument extends Document, CommentInput {
+interface CommentDocument extends Document {
+    user: Schema.Types.ObjectId;
+    question: Schema.Types.ObjectId;
+    comment: string;
     createdAt: Date;
 }
 
