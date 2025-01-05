@@ -4,7 +4,12 @@ import { createComment, getComments } from '../db/services/comments';
 export const createCommentHandler = async (req: Request, res: Response) => {
     const user = req.body.user;
     const question = req.params.question;
-    const comment = req.body.comment;
+    const { comment } = req.body;
+
+    if (!comment) {
+        res.status(400).send('No comment given');
+        return;
+    }
 
     try {
         await createComment({ userId: user.id, questionId: question, comment });
