@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { createUser, deleteUser, getUserByEmail, updateUserEmail, updateUserPassword } from '../db/services/users';
+import { getAccessToken } from '../helpers/authenticate';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
@@ -13,14 +14,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const accessToken = jwt.sign({ email, username }, process.env.ACCESS_TOKEN_SECRET as string);
-
     try {
         await createUser({ email, username, password: hashedPassword });
-        res.json({
-            message: 'Successfully created user',
-            accessToken,
-        });
+        res.sendStatus(201);
     } catch (error) {
         console.error(error);
         res.status(400).send('Account already registered with that email');
@@ -50,7 +46,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
-        const accessToken = jwt.sign({ email, username: user.username }, process.env.ACCESS_TOKEN_SECRET as string);
+        const accessToken = getAccessToken(user.id, user.email, user.username);
 
         res.json({
             message: 'Successfully logged in',

@@ -8,7 +8,7 @@ export const createUser = async (user: UserInput): Promise<void> => {
     }
 };
 
-export const getUserByEmail = async (email: string): Promise<UserInput | undefined> => {
+export const getUserByEmail = async (email: string) => {
     try {
         const user = await User.findOne({ email }).exec();
 
@@ -18,6 +18,7 @@ export const getUserByEmail = async (email: string): Promise<UserInput | undefin
         }
 
         return {
+            id: user._id as string,
             email: user.email,
             username: user.username,
             password: user.password,
