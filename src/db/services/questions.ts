@@ -30,15 +30,3 @@ export const getQuestionById = async (id: string) => {
         console.error('Error getting question:', error);
     }
 };
-
-// Todo: Update Question Average Difficulty
-// Todo: Update Question Average Mark
-// Todo: Delete Question By Id
-
-export const deleteQuestionById = async (id: string): Promise<void> => {
-    try {
-        await Question.findByIdAndDelete(id);
-    } catch (error) {
-        console.error('Error deleting question:', error);
-    }
-};
