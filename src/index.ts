@@ -1,5 +1,5 @@
 import express from 'express';
-import { connectDB } from './db/models';
+import { connectDB } from './db';
 import router from './router'
 import dotenv from 'dotenv';
 
