@@ -8,6 +8,7 @@ interface UserInput {
 
 interface UserDocument extends Document, UserInput {
     profilePicture?: string;
+    courses: [Schema.Types.ObjectId];
     createdAt: Date;
 }
 
@@ -16,6 +17,7 @@ const userSchema: Schema<UserDocument> = new Schema<UserDocument>({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     profilePicture: { type: String },
+    courses: { type: [Schema.Types.ObjectId], required: true, default: [], ref: 'Course' },
     createdAt: { type: Date, default: Date.now(), required: true },
 });
 
