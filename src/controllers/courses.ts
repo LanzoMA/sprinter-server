@@ -14,6 +14,6 @@ export const createCourseHandler = async (req: Request, res: Response) => {
 };
 
 export const getCoursesHandler = async (req: Request, res: Response) => {
-    const courses = getCourses();
+    const courses = await getCourses();
     res.json(courses);
 };
