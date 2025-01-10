@@ -1,5 +1,11 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
+interface CourseInput {
+  name: string,
+  qualification: string,
+  examBoard: string,
+}
+
 interface CourseDocument extends Document {
   name: string,
   qualification: string,
@@ -14,4 +20,4 @@ const courseSchema: Schema<CourseDocument> = new Schema({
 
 const Course: Model<CourseDocument> = mongoose.model('Course', courseSchema);
 
-export { Course };
+export { Course, CourseInput };
