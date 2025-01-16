@@ -1,8 +1,14 @@
-import { User, UserInput } from "../models/users";
+import { User, UserInput, UserToken } from "../models/users";
 
-export const createUser = async (user: UserInput): Promise<void> => {
+export const createUser = async (user: UserInput): Promise<UserToken> => {
     try {
-        await new User(user).save();
+        const created = await new User(user).save();
+
+        return {
+            id: created._id as string,
+            email: created.email,
+            username: created.username,
+        };
     } catch (error) {
         throw Error('Error creating user');
     }

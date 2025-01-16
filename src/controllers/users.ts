@@ -15,11 +15,14 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-        await createUser({ email, username, password: hashedPassword });
-        res.sendStatus(201);
+        const user = await createUser({ email, username, password: hashedPassword });
+
+        const accessToken = getAccessToken(user.id, user.email, user.username);
+
+        res.status(201).json({ accessToken });
     } catch (error) {
         console.error(error);
-        res.status(400).send('Account already registered with that email');
+        res.status(400).send('Account already registered with that email/username');
     }
 };
 

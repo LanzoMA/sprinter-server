@@ -6,6 +6,12 @@ interface UserInput {
     password: string;
 }
 
+interface UserToken {
+    id: string;
+    email: string;
+    username: string;
+}
+
 interface UserDocument extends Document, UserInput {
     profilePicture?: string;
     courses: [Schema.Types.ObjectId];
@@ -23,4 +29,4 @@ const userSchema: Schema<UserDocument> = new Schema<UserDocument>({
 
 const User: Model<UserDocument> = mongoose.model<UserDocument>('User', userSchema);
 
-export { User, UserInput };
+export { User, UserInput, UserToken };
