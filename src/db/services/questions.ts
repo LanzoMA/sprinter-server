@@ -16,16 +16,7 @@ export const getQuestionById = async (id: string) => {
             throw Error('Question not found');
         }
 
-        return {
-            _id: question._id,
-            question: question.question,
-            markScheme: question.markScheme,
-            course: question.course,
-            year: question.year,
-            questionNumber: question.questionNumber,
-            totalMarks: question.totalMarks,
-            author: question.author,
-        };
+        return question;
     } catch (error) {
         console.error('Error getting question:', error);
     }

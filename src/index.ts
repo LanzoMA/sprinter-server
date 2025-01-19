@@ -10,7 +10,7 @@ connectDB();
 const app: express.Express = express();
 const PORT: number = 5000;
 
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 app.use('/', router());
 
 app.listen(PORT, () => {
