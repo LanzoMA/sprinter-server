@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { createQuestion } from '../db/services/questions';
 
 export const createQuestionHandler = async (req: Request, res: Response): Promise<void> => {
-    const { question, markScheme, course, year, questionNumber, totalMarks, author } = req.body;
+    const { question, markScheme, title, description, course, totalMarks, author } = req.body;
 
-    if (!question || !markScheme || !course || !totalMarks || !author) {
+    if (!question || !markScheme || !title || !description || !course || !totalMarks || !author) {
         res.status(400).send('Not all fields were given');
         return;
     }
@@ -13,9 +13,9 @@ export const createQuestionHandler = async (req: Request, res: Response): Promis
         await createQuestion({
             question,
             markScheme,
+            title,
+            description,
             course,
-            year,
-            questionNumber,
             totalMarks,
             author,
         });
