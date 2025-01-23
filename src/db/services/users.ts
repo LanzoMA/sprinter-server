@@ -1,4 +1,4 @@
-import { User, UserInput, UserToken } from "../models/users";
+import { User, UserInput, UserToken } from '../models/users';
 
 export const createUser = async (user: UserInput): Promise<UserToken> => {
     try {
@@ -28,14 +28,16 @@ export const getUserByEmail = async (email: string) => {
             email: user.email,
             username: user.username,
             password: user.password,
-        }
-
+        };
     } catch (error) {
         console.error('Error getting user');
     }
-}
+};
 
-export const updateUserEmail = async (email: string, newEmail: string): Promise<void> => {
+export const updateUserEmail = async (
+    email: string,
+    newEmail: string
+): Promise<void> => {
     try {
         await User.updateOne({ email }, { email: newEmail }).exec();
     } catch (error) {
@@ -43,7 +45,10 @@ export const updateUserEmail = async (email: string, newEmail: string): Promise<
     }
 };
 
-export const updateUserPassword = async (email: string, password: string): Promise<void> => {
+export const updateUserPassword = async (
+    email: string,
+    password: string
+): Promise<void> => {
     try {
         await User.updateOne({ email }, { password }).exec();
     } catch (error) {
