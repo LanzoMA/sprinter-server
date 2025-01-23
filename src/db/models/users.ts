@@ -18,15 +18,25 @@ interface UserDocument extends Document, UserInput {
     createdAt: Date;
 }
 
-const userSchema: Schema<UserDocument> = new Schema<UserDocument>({
-    email: { type: String, required: true, unique: true },
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    profilePicture: { type: String },
-    courses: { type: [Schema.Types.ObjectId], required: true, default: [], ref: 'Course' },
-    createdAt: { type: Date, default: Date.now(), required: true },
-});
+const userSchema: Schema<UserDocument> = new Schema<UserDocument>(
+    {
+        email: { type: String, required: true, unique: true },
+        username: { type: String, required: true, unique: true },
+        password: { type: String, required: true },
+        profilePicture: { type: String },
+        courses: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+            ref: 'Course',
+        },
+    },
+    { timestamps: true }
+);
 
-const User: Model<UserDocument> = mongoose.model<UserDocument>('User', userSchema);
+const User: Model<UserDocument> = mongoose.model<UserDocument>(
+    'User',
+    userSchema
+);
 
 export { User, UserInput, UserToken };
