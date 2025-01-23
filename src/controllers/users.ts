@@ -1,7 +1,13 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
-import { createUser, deleteUser, getUserByEmail, updateUserEmail, updateUserPassword } from '../db/services/users';
+import {
+    createUser,
+    deleteUser,
+    getUserByEmail,
+    updateUserEmail,
+    updateUserPassword,
+} from '../db/services/users';
 import { getAccessToken } from '../helpers/authenticate';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
@@ -15,14 +21,20 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-        const user = await createUser({ email, username, password: hashedPassword });
+        const user = await createUser({
+            email,
+            username,
+            password: hashedPassword,
+        });
 
         const accessToken = getAccessToken(user.id, user.email, user.username);
 
         res.status(201).json({ accessToken });
     } catch (error) {
         console.error(error);
-        res.status(400).send('Account already registered with that email/username');
+        res.status(400).send(
+            'Account already registered with that email/username'
+        );
     }
 };
 
@@ -60,7 +72,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-export const updateEmail = async (req: Request, res: Response): Promise<void> => {
+export const updateEmail = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
     const user = req.body.user;
     const { email } = req.body;
 
@@ -94,7 +109,10 @@ export const updateEmail = async (req: Request, res: Response): Promise<void> =>
 
 // Todo: Update username controller
 
-export const updatePassword = async (req: Request, res: Response): Promise<void> => {
+export const updatePassword = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
     const { email } = req.body.user;
     const { password } = req.body;
 
@@ -125,7 +143,10 @@ export const updatePassword = async (req: Request, res: Response): Promise<void>
 
 // Todo: Update profile picture controller
 
-export const deleteAccount = async (req: Request, res: Response): Promise<void> => {
+export const deleteAccount = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
     const { email } = req.body.user;
 
     try {
