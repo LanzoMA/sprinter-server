@@ -16,12 +16,19 @@ interface RatingDocument extends Document {
     updatedAt: Date;
 }
 
-const ratingSchema: Schema<RatingDocument> = new Schema<RatingDocument>({
-    user: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
-    question: { type: Schema.Types.ObjectId, required: true, ref: 'Question' },
-    difficulty: { type: Number, required: true },
-    marks: { type: Number, required: true },
-}, { timestamps: true });
+const ratingSchema: Schema<RatingDocument> = new Schema<RatingDocument>(
+    {
+        user: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+        question: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: 'Question',
+        },
+        difficulty: { type: Number, required: true },
+        marks: { type: Number, required: true },
+    },
+    { timestamps: true }
+);
 
 const Rating: Model<RatingDocument> = mongoose.model('Rating', ratingSchema);
 
