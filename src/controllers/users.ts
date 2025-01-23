@@ -9,6 +9,7 @@ import {
     updateUserPassword,
 } from '../db/services/users';
 import { getAccessToken } from '../helpers/authenticate';
+import { UserToken } from '../db/models/users';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
@@ -76,7 +77,7 @@ export const updateEmail = async (
     req: Request,
     res: Response
 ): Promise<void> => {
-    const user = req.body.user;
+    const user: UserToken = req.body.user;
     const { email } = req.body;
 
     if (!email) {
@@ -92,15 +93,9 @@ export const updateEmail = async (
     try {
         await updateUserEmail(user.email, email);
 
-        const accessToken = jwt.sign(
-            { email, username: user.username },
-            process.env.ACCESS_TOKEN_SECRET as string
-        );
+        const accessToken = getAccessToken(user.id, email, user.username);
 
-        res.status(201).json({
-            message: 'Successfully changed email',
-            accessToken,
-        });
+        res.status(201).json({ accessToken });
     } catch (error) {
         console.error(error);
         res.status(400).send('Error updating user email');
@@ -151,7 +146,7 @@ export const deleteAccount = async (
 
     try {
         await deleteUser(email);
-        res.status(200).send('Successfully deleted user');
+        res.sendStatus(204);
     } catch (error) {
         console.error(error);
         res.status(400).send('Error deleting user');
