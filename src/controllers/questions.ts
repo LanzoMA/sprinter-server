@@ -1,10 +1,28 @@
 import { Request, Response } from 'express';
-import { createQuestion } from '../db/services/questions';
+import { createQuestion, getQuestionById } from '../db/services/questions';
 
-export const createQuestionHandler = async (req: Request, res: Response): Promise<void> => {
-    const { question, markScheme, title, description, course, totalMarks, author } = req.body;
+export const createQuestionHandler = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const {
+        question,
+        markScheme,
+        title,
+        description,
+        course,
+        totalMarks,
+        author,
+    } = req.body;
 
-    if (!question || !markScheme || !title || !course || !totalMarks || !author) {
+    if (
+        !question ||
+        !markScheme ||
+        !title ||
+        !course ||
+        !totalMarks ||
+        !author
+    ) {
         res.status(400).send('Not all fields were given');
         return;
     }
@@ -26,11 +44,22 @@ export const createQuestionHandler = async (req: Request, res: Response): Promis
     }
 };
 
-export const getQuestionByIdHandler = async (req: Response, res: Response): Promise<void> => {
+export const getQuestionByIdHandler = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const { id } = req.params;
 
+    try {
+        const question = await getQuestionById(id);
+        res.status(200).json(question);
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(error);
+    }
 };
 
-export const deleteQuestionById = async (req: Response, res: Response): Promise<void> => {
-
-};
-
+export const deleteQuestionById = async (
+    req: Request,
+    res: Response
+): Promise<void> => {};

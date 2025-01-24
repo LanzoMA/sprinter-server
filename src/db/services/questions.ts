@@ -1,6 +1,8 @@
-import { Question, QuestionInput } from "../models/questions";
+import { Question, QuestionDocument, QuestionInput } from '../models/questions';
 
-export const createQuestion = async (question: QuestionInput): Promise<void> => {
+export const createQuestion = async (
+    question: QuestionInput
+): Promise<void> => {
     try {
         await new Question(question).save();
     } catch (error) {
@@ -8,7 +10,9 @@ export const createQuestion = async (question: QuestionInput): Promise<void> => 
     }
 };
 
-export const getQuestionById = async (id: string) => {
+export const getQuestionById = async (
+    id: string
+): Promise<QuestionDocument | undefined> => {
     try {
         const question = await Question.findById(id);
 
