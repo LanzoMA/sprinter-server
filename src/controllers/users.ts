@@ -13,11 +13,6 @@ import { UserToken } from '../db/models/users';
 export const register = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
 
-    if (!email || !username || !password) {
-        res.status(400).send('Email/username/password not given');
-        return;
-    }
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {

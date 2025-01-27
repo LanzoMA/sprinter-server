@@ -5,6 +5,12 @@ const loginSchema = Joi.object({
     password: Joi.string().required(),
 });
 
+const registerSchema = Joi.object({
+    email: Joi.string().required(),
+    username: Joi.string().alphanum().min(3).max(20).required(),
+    password: Joi.string().min(8).required(),
+});
+
 const questionSchema = Joi.object({
     question: Joi.string().required(),
     markScheme: Joi.string().required(),
@@ -21,6 +27,7 @@ const achievementSchema = Joi.object({
 
 export default {
     '/auth/login': loginSchema,
+    '/auth/register': registerSchema,
     '/questions': questionSchema,
     '/achievements': achievementSchema,
 } as { [key: string]: ObjectSchema };
