@@ -1,5 +1,10 @@
 import { Request, Response } from 'express';
-import { createQuestion, getQuestionById } from '../db/services/questions';
+import {
+    createQuestion,
+    getQuestionById,
+    searchQuestions,
+} from '../db/services/questions';
+import { SearchQuery } from '../helpers/models';
 
 export const createQuestionHandler = async (
     req: Request,
@@ -14,18 +19,6 @@ export const createQuestionHandler = async (
         totalMarks,
         author,
     } = req.body;
-
-    if (
-        !question ||
-        !markScheme ||
-        !title ||
-        !course ||
-        !totalMarks ||
-        !author
-    ) {
-        res.status(400).send('Not all fields were given');
-        return;
-    }
 
     try {
         await createQuestion({
@@ -60,10 +53,16 @@ export const getQuestionByIdHandler = async (
 };
 
 export const searchQuestionsHandler = async (
-    req: Request,
+    req: Request<{}, {}, {}, SearchQuery>,
     res: Response
 ): Promise<void> => {
-    res.send('Success');
+    try {
+        const questions = await searchQuestions(req.query);
+        res.json(questions);
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ error });
+    }
 };
 
 export const deleteQuestionById = async (

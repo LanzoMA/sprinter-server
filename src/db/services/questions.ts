@@ -1,3 +1,4 @@
+import { SearchQuery } from '../../helpers/models';
 import { Question, QuestionDocument, QuestionInput } from '../models/questions';
 
 export const createQuestion = async (
@@ -25,3 +26,18 @@ export const getQuestionById = async (
         console.error('Error getting question:', error);
     }
 };
+
+const searchQuestions = async (
+    searchQuery: SearchQuery
+): Promise<Array<QuestionDocument>> => {
+    const questions = await Question.find({
+        course: searchQuery.course,
+        totalMarks: { $gte: searchQuery.minMarks, $lte: searchQuery.maxMarks },
+    })
+        .sort({ createdAt: -1 })
+        .limit(10);
+
+    return questions;
+};
+
+export { searchQuestions };
