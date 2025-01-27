@@ -30,12 +30,23 @@ export const getQuestionById = async (
 const searchQuestions = async (
     searchQuery: SearchQuery
 ): Promise<Array<QuestionDocument>> => {
-    const questions = await Question.find({
-        course: searchQuery.course,
-        totalMarks: { $gte: searchQuery.minMarks, $lte: searchQuery.maxMarks },
-    })
-        .sort({ createdAt: -1 })
-        .limit(10);
+    const match: { [key: string]: any } = {};
+
+    if (searchQuery.course) match['course'] = searchQuery.course;
+
+    const markRange: { [key: string]: number } = {};
+
+    if (searchQuery.minMarks) markRange['$gte'] = searchQuery.minMarks;
+    if (searchQuery.maxMarks) markRange['$lte'] = searchQuery.maxMarks;
+    if (Object.keys(markRange).length !== 0) match['totalMarks'] = markRange;
+
+    const sort: { [key: string]: any } = {};
+
+    searchQuery.sortBy === 'marks'
+        ? (sort['totalMarks'] = -1)
+        : (sort['createdAt'] = -1);
+
+    const questions = await Question.find(match).sort(sort).limit(10);
 
     return questions;
 };
