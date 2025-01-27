@@ -1,8 +1,8 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
 
 interface RatingInput {
-    userId: string;
-    questionId: string;
+    user: string;
+    question: string;
     difficulty: number;
     marks: number;
 }
