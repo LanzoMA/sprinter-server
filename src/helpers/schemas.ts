@@ -21,7 +21,7 @@ const questionSchema = Joi.object({
 });
 
 const ratingSchema = Joi.object({
-    difficulty: Joi.string().required(),
+    difficulty: Joi.number().min(0).max(3).required(),
     marks: Joi.number().min(0).max(100).required(),
 });
 
