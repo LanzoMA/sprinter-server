@@ -3,7 +3,7 @@ import { UserToken } from '../db/models/users';
 import { createRating } from '../db/services/ratings';
 
 const createRatingHandler = async (req: Request, res: Response) => {
-    const user: UserToken = req.body;
+    const user: UserToken = req.body.user;
     const { id } = req.params;
     const { difficulty, marks } = req.body;
 
