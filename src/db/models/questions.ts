@@ -19,6 +19,8 @@ interface QuestionDocument extends Document {
     course: string;
     totalMarks: number;
     author: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const questionSchema = new Schema(
