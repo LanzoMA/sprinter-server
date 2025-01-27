@@ -5,9 +5,7 @@ import {
     getQuestionByIdHandler,
     searchQuestionsHandler,
 } from '../controllers/questions';
-import schemaValidator, {
-    validateSearchQuery,
-} from '../middleware/schemaValidator';
+import schemaValidator from '../middleware/schemaValidator';
 
 export default (router: Router): void => {
     router.post(
@@ -16,10 +14,6 @@ export default (router: Router): void => {
         authenticateToken,
         createQuestionHandler
     );
-    router.get(
-        '/questions/search',
-        validateSearchQuery,
-        searchQuestionsHandler
-    );
+    router.get('/questions/search', searchQuestionsHandler);
     router.get('/questions/:id', getQuestionByIdHandler);
 };
