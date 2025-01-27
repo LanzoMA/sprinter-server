@@ -15,7 +15,7 @@ POST /auth/login
 #### Register
 
 ```http
-/auth/register
+POST /auth/register
 ```
 
 ### Questions
