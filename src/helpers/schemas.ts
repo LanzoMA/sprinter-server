@@ -1,5 +1,10 @@
 import Joi, { ObjectSchema } from 'joi';
 
+const loginSchema = Joi.object({
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+});
+
 const questionSchema = Joi.object({
     question: Joi.string().required(),
     markScheme: Joi.string().required(),
@@ -15,6 +20,7 @@ const achievementSchema = Joi.object({
 });
 
 export default {
+    '/auth/login': loginSchema,
     '/questions': questionSchema,
     '/achievements': achievementSchema,
 } as { [key: string]: ObjectSchema };

@@ -41,11 +41,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 export const login = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-        res.status(400).send('Email/password was not given');
-        return;
-    }
-
     try {
         const user = await getUserByEmail(email);
 
@@ -64,7 +59,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         const accessToken = getAccessToken(user.id, user.email, user.username);
 
         res.json({
-            message: 'Successfully logged in',
             accessToken,
         });
     } catch (error) {
