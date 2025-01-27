@@ -20,6 +20,11 @@ const questionSchema = Joi.object({
     author: Joi.string().required(),
 });
 
+const ratingSchema = Joi.object({
+    difficulty: Joi.string().required(),
+    marks: Joi.number().min(0).max(100).required(),
+});
+
 const achievementSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
@@ -29,5 +34,6 @@ export default {
     '/auth/login': loginSchema,
     '/auth/register': registerSchema,
     '/questions': questionSchema,
+    '/questions/:id/ratings': ratingSchema,
     '/achievements': achievementSchema,
 } as { [key: string]: ObjectSchema };
