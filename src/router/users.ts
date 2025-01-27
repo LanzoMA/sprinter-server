@@ -1,6 +1,12 @@
-import { Router } from "express";
-import { deleteAccount, login, register, updateEmail, updatePassword } from "../controllers/users";
-import { authenticateToken } from "../helpers/authenticate";
+import { Router } from 'express';
+import {
+    deleteAccount,
+    login,
+    register,
+    updateEmail,
+    updatePassword,
+} from '../controllers/users';
+import authenticateToken from '../middleware/authenticate-token';
 
 export default (router: Router): void => {
     router.post('/register', register);

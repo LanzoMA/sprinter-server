@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authenticateToken } from '../helpers/authenticate';
+import authenticateToken from '../middleware/authenticate-token';
 import { createAchievementHandler } from '../controllers/achievements';
 
 export default (router: Router) => {
