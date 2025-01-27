@@ -1,17 +1,13 @@
 import { User, UserInput, UserToken } from '../models/users';
 
 export const createUser = async (user: UserInput): Promise<UserToken> => {
-    try {
-        const created = await new User(user).save();
+    const created = await new User(user).save();
 
-        return {
-            id: created._id as string,
-            email: created.email,
-            username: created.username,
-        };
-    } catch (error) {
-        throw Error('Error creating user');
-    }
+    return {
+        id: created._id as string,
+        email: created.email,
+        username: created.username,
+    };
 };
 
 export const getUserByEmail = async (email: string) => {

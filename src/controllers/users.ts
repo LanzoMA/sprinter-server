@@ -25,11 +25,24 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         const accessToken = getAccessToken(user.id, user.email, user.username);
 
         res.status(201).json({ accessToken });
-    } catch (error) {
-        console.error(error);
-        res.status(400).send(
-            'Account already registered with that email/username'
-        );
+    } catch (error: any) {
+        if (error.code === 11000) {
+            const keys = Object.keys(error.keyValue);
+
+            if (keys.includes('email')) {
+                res.status(400).json({
+                    error: 'Account already registered with this email',
+                });
+                return;
+            }
+
+            if (keys.includes('username')) {
+                res.status(400).json({ error: 'Username already taken' });
+                return;
+            }
+        }
+
+        res.status(500).send('Something went wrong. Please try again later.');
     }
 };
 
