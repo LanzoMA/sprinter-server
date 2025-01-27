@@ -59,6 +59,13 @@ export const getQuestionByIdHandler = async (
     }
 };
 
+export const searchQuestionsHandler = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    res.send('Success');
+};
+
 export const deleteQuestionById = async (
     req: Request,
     res: Response
