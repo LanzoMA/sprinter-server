@@ -7,8 +7,16 @@ const createRatingHandler = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { difficulty, marks } = req.body;
 
-    await createRating({ user: user.id, question: id, difficulty, marks });
-    res.sendStatus(201);
+    try {
+        await createRating({ user: user.id, question: id, difficulty, marks });
+        res.sendStatus(201);
+    } catch (error) {
+        console.error(error);
+
+        if (error instanceof Error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
 };
 
 export { createRatingHandler };
