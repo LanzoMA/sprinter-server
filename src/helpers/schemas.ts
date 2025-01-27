@@ -9,6 +9,12 @@ const questionSchema = Joi.object({
     author: Joi.string().required(),
 });
 
+const achievementSchema = Joi.object({
+    name: Joi.string().required(),
+    description: Joi.string().required(),
+});
+
 export default {
     '/questions': questionSchema,
+    '/achievements': achievementSchema,
 } as { [key: string]: ObjectSchema };
