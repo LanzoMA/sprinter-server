@@ -15,6 +15,7 @@ const questionSchema = Joi.object({
     question: Joi.string().required(),
     markScheme: Joi.string().required(),
     title: Joi.string().required(),
+    description: Joi.string().allow(''),
     course: Joi.string().required(),
     totalMarks: Joi.number().min(0).max(30).required(),
     author: Joi.string().required(),
