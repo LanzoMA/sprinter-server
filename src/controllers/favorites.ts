@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserToken } from '../db/models/users';
-import { createFavorite } from '../db/services/favorites';
+import { createFavorite, deleteFavorite } from '../db/services/favorites';
 
 const createFavoriteHandler = async (req: Request, res: Response) => {
     const user: UserToken = req.body.user;
@@ -18,4 +18,16 @@ const createFavoriteHandler = async (req: Request, res: Response) => {
     }
 };
 
-export { createFavoriteHandler };
+const deleteFavoriteHandler = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+        await deleteFavorite(id);
+        res.sendStatus(204);
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ error });
+    }
+};
+
+export { createFavoriteHandler, deleteFavoriteHandler };
