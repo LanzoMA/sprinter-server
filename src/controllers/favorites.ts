@@ -4,10 +4,10 @@ import { createFavorite, deleteFavorite } from '../db/services/favorites';
 
 const createFavoriteHandler = async (req: Request, res: Response) => {
     const user: UserToken = req.body.user;
-    const question = req.body.question;
+    const { id } = req.params;
 
     try {
-        await createFavorite({ user: user.id, question });
+        await createFavorite({ user: user.id, question: id });
         res.sendStatus(201);
     } catch (error) {
         console.error(error);
