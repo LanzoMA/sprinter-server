@@ -19,10 +19,11 @@ const createFavoriteHandler = async (req: Request, res: Response) => {
 };
 
 const deleteFavoriteHandler = async (req: Request, res: Response) => {
+    const user: UserToken = req.body.user;
     const { id } = req.params;
 
     try {
-        await deleteFavorite(id);
+        await deleteFavorite({ user: user.id, question: id });
         res.sendStatus(204);
     } catch (error) {
         console.error(error);

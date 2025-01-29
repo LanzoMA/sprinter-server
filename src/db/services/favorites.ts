@@ -10,8 +10,8 @@ const createFavorite = async (favorite: FavoriteInput) => {
     await new Favorite(favorite).save();
 };
 
-const deleteFavorite = async (id: string) => {
-    await Favorite.findByIdAndDelete(id);
+const deleteFavorite = async (favorite: FavoriteInput) => {
+    await Favorite.findOneAndDelete(favorite);
 };
 
 export { createFavorite, deleteFavorite };
