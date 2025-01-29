@@ -10,8 +10,12 @@ const createFavorite = async (favorite: FavoriteInput) => {
     await new Favorite(favorite).save();
 };
 
+const getQuestionFavoriteCount = async (question: string): Promise<number> => {
+    return await Favorite.countDocuments({ question });
+};
+
 const deleteFavorite = async (favorite: FavoriteInput) => {
     await Favorite.findOneAndDelete(favorite);
 };
 
-export { createFavorite, deleteFavorite };
+export { createFavorite, getQuestionFavoriteCount, deleteFavorite };
