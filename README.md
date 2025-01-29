@@ -57,6 +57,18 @@ GET /questions/search
 | `maxMarks`      | `integer` |                                                                                               |
 | `sortBy`        | `string`  | Sorts the posts in descending order from either `views`, `favorites`, `difficulty` or `marks` |
 
+### Favorite a question
+
+```http
+POST /questions/:id/favorites
+```
+
+### Unfavorite a question
+
+```http
+DELETE /questions/:id/favorites
+```
+
 ### Comments
 
 #### Get question comments
