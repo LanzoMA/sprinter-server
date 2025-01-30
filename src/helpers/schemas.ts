@@ -33,7 +33,7 @@ const achievementSchema = Joi.object({
 
 const userAchievementSchema = Joi.object({
     user: Joi.string().required(),
-    description: Joi.string().required(),
+    achievement: Joi.string().required(),
 });
 
 export default {
