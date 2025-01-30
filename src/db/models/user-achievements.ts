@@ -31,4 +31,4 @@ const UserAchievement: Model<UserAchievementDocument> =
         userAchievementSchema
     );
 
-export { UserAchievement, UserAchievementInput };
+export { UserAchievement, UserAchievementInput, UserAchievementDocument };
