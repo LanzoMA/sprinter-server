@@ -31,10 +31,16 @@ const achievementSchema = Joi.object({
     description: Joi.string().required(),
 });
 
+const userAchievementSchema = Joi.object({
+    user: Joi.string().required(),
+    description: Joi.string().required(),
+});
+
 export default {
     '/auth/login': loginSchema,
     '/auth/register': registerSchema,
     '/questions': questionSchema,
     '/questions/:id/ratings': ratingSchema,
     '/achievements': achievementSchema,
+    '/account/achievements': userAchievementSchema,
 } as { [key: string]: ObjectSchema };
