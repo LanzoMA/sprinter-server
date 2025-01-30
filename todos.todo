@@ -1,8 +1,8 @@
 Todo:
     ✔ Create route to fetch the number of favorites a question has @started(25-01-29 13:36) @done(25-01-29 13:44) @lasted(8m29s)
+    [] Implement user achievements @started(25-01-29 14:02)
     [] Handle duplicate achievement names
     [] Change /login and /register routes to /auth/login and /auth/register respectively
-    [] Implement user achievements @started(25-01-29 14:02)
     [] Implement adding and removing user courses
     [] Implement fetching current daily streak
     [] Implement course statistics
