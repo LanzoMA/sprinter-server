@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import { UserToken } from '../db/models/users';
-import { createUserAchievement } from '../db/services/user-achievements';
+import {
+    createUserAchievement,
+    getUserAchievements,
+} from '../db/services/user-achievements';
 
 const createUserAchievementHandler = async (req: Request, res: Response) => {
     const userToken: UserToken = req.body.user;
@@ -15,4 +18,10 @@ const createUserAchievementHandler = async (req: Request, res: Response) => {
     }
 };
 
-export { createUserAchievementHandler };
+const getUserAchievementsHandler = async (req: Request, res: Response) => {
+    const userToken: UserToken = req.body.user;
+    const achievements = await getUserAchievements(userToken.id);
+    res.json({ achievements });
+};
+
+export { createUserAchievementHandler, getUserAchievementsHandler };
