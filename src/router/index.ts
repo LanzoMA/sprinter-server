@@ -6,6 +6,7 @@ import courses from './courses';
 import achievements from './achievements';
 import ratings from './ratings';
 import favorites from './favorites';
+import userAchievements from './user-achievements';
 
 const router: Router = Router();
 
@@ -17,5 +18,6 @@ export default (): Router => {
     ratings(router);
     courses(router);
     achievements(router);
+    userAchievements(router);
     return router;
 };
