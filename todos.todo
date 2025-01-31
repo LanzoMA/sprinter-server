@@ -6,3 +6,5 @@ Todo:
     [] Implement fetching current daily streak
     [] Implement course statistics
     [] Handle duplicate achievement names
+    [] Update profile picture route
+    [] Get profile picture route

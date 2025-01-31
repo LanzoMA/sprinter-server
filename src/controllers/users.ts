@@ -4,13 +4,14 @@ import {
     createUser,
     deleteUser,
     getUserByEmail,
+    updateUserCourses,
     updateUserEmail,
     updateUserPassword,
 } from '../db/services/users';
 import { getAccessToken } from '../helpers/authenticate';
 import { UserToken } from '../db/models/users';
 
-export const register = async (req: Request, res: Response): Promise<void> => {
+const register = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -46,7 +47,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-export const login = async (req: Request, res: Response): Promise<void> => {
+const login = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
     try {
@@ -74,10 +75,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-export const updateEmail = async (
-    req: Request,
-    res: Response
-): Promise<void> => {
+const updateEmail = async (req: Request, res: Response): Promise<void> => {
     const user: UserToken = req.body.user;
     const { email } = req.body;
 
@@ -103,12 +101,7 @@ export const updateEmail = async (
     }
 };
 
-// Todo: Update username controller
-
-export const updatePassword = async (
-    req: Request,
-    res: Response
-): Promise<void> => {
+const updatePassword = async (req: Request, res: Response): Promise<void> => {
     const { email } = req.body.user;
     const { password } = req.body;
 
@@ -137,12 +130,7 @@ export const updatePassword = async (
     }
 };
 
-// Todo: Update profile picture controller
-
-export const deleteAccount = async (
-    req: Request,
-    res: Response
-): Promise<void> => {
+const deleteAccount = async (req: Request, res: Response): Promise<void> => {
     const { email } = req.body.user;
 
     try {
@@ -152,4 +140,24 @@ export const deleteAccount = async (
         console.error(error);
         res.status(400).send('Error deleting user');
     }
+};
+
+const updateUserCoursesHandler = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const userToken: UserToken = req.body.user;
+    const courses: Array<string> = req.body.courses;
+
+    await updateUserCourses(userToken.id, courses);
+    res.sendStatus(200);
+};
+
+export {
+    register,
+    login,
+    updateEmail,
+    updatePassword,
+    deleteAccount,
+    updateUserCoursesHandler,
 };
