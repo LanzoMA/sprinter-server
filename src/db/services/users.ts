@@ -1,6 +1,6 @@
 import { User, UserInput, UserToken } from '../models/users';
 
-export const createUser = async (user: UserInput): Promise<UserToken> => {
+const createUser = async (user: UserInput): Promise<UserToken> => {
     const created = await new User(user).save();
 
     return {
@@ -10,7 +10,7 @@ export const createUser = async (user: UserInput): Promise<UserToken> => {
     };
 };
 
-export const getUserByEmail = async (email: string) => {
+const getUserByEmail = async (email: string) => {
     try {
         const user = await User.findOne({ email }).exec();
 
@@ -30,7 +30,7 @@ export const getUserByEmail = async (email: string) => {
     }
 };
 
-export const updateUserEmail = async (
+const updateUserEmail = async (
     email: string,
     newEmail: string
 ): Promise<void> => {
@@ -41,7 +41,7 @@ export const updateUserEmail = async (
     }
 };
 
-export const updateUserPassword = async (
+const updateUserPassword = async (
     email: string,
     password: string
 ): Promise<void> => {
@@ -52,10 +52,23 @@ export const updateUserPassword = async (
     }
 };
 
-export const deleteUser = async (email: string): Promise<void> => {
+const deleteUser = async (email: string): Promise<void> => {
     try {
         await User.deleteOne({ email }).exec();
     } catch (error) {
         throw Error('Error deleting user');
     }
+};
+
+const updateUserCourses = async (id: string, courses: Array<string>) => {
+    await User.findByIdAndUpdate(id, { $set: { courses } });
+};
+
+export {
+    createUser,
+    getUserByEmail,
+    updateUserEmail,
+    updateUserPassword,
+    deleteUser,
+    updateUserCourses,
 };
