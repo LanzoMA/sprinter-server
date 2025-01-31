@@ -119,6 +119,18 @@ POST /achievements
 PUT /account/courses
 ```
 
+### Get all account achievements
+
+```http
+GET /account/achievements
+```
+
+### Post a new achievement for an account
+
+```http
+POST /account/achievements
+```
+
 #### Change email
 
 ```http

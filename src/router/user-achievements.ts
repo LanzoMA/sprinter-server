@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import schemaValidator from '../middleware/schemaValidator';
 import authenticateToken from '../middleware/authenticate-token';
-import { createUserAchievementHandler } from '../controllers/user-achievements';
+import {
+    createUserAchievementHandler,
+    getUserAchievementsHandler,
+} from '../controllers/user-achievements';
 
 export default (router: Router) => {
     router.post(
@@ -9,5 +12,10 @@ export default (router: Router) => {
         schemaValidator('/account/achievements'),
         authenticateToken,
         createUserAchievementHandler
+    );
+    router.get(
+        '/account/achievements',
+        authenticateToken,
+        getUserAchievementsHandler
     );
 };

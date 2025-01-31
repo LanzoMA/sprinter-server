@@ -11,7 +11,10 @@ const createUserAchievement = async (userAchievement: UserAchievementInput) => {
 const getUserAchievements = async (
     user: string
 ): Promise<Array<UserAchievementDocument> | undefined> => {
-    return await UserAchievement.find({ user }).sort({ createdAt: -1 }).exec();
+    return await UserAchievement.find({ user }, { user: 0 })
+        .populate('achievement')
+        .sort({ createdAt: -1 })
+        .exec();
 };
 
 export { createUserAchievement, getUserAchievements };
