@@ -29,7 +29,7 @@ GET /questions
 #### Get a question
 
 ```http
-GET /questions/:question
+GET /questions/:id
 ```
 
 #### Post a question
@@ -41,7 +41,7 @@ POST /questions
 #### Rate a question
 
 ```http
-POST /questions/:question/ratings
+POST /questions/:id/ratings
 ```
 
 #### Search a question
@@ -74,13 +74,13 @@ DELETE /questions/:id/favorites
 #### Get question comments
 
 ```http
-GET /questions/:question/comments
+GET /questions/:id/comments
 ```
 
 #### Create a comment on a question
 
 ```http
-POST /questions/:question/comments
+POST /questions/:id/comments
 ```
 
 ### Courses
