@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
     deleteAccount,
+    getUserCoursesHandler,
     login,
     register,
     updateEmail,
@@ -16,6 +17,7 @@ export default (router: Router): void => {
     router.put('/account/email', authenticateToken, updateEmail);
     router.put('/account/password', authenticateToken, updatePassword);
     router.delete('/account', authenticateToken, deleteAccount);
+    router.get('/account/courses', authenticateToken, getUserCoursesHandler);
     router.put(
         '/account/courses',
         schemaValidator('/account/courses'),

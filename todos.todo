@@ -4,7 +4,7 @@ Todo:
     ✔ Change /login and /register routes to /auth/login and /auth/register respectively @started(25-02-02 07:19) @done(25-02-02 07:20) @lasted(1m9s)
     ✔ Implement adding and removing user courses @started(25-01-31 10:57) @done(25-02-02 07:18) @lasted(1d20h21m48s)
     [] Implement get recommended questions
-    ✔ Implement get user courses @done(25-02-02 07:24)
+    ✔ Implement get user courses @started(25-02-02 07:35) @done(25-02-02 07:35) @lasted(24s)
     [] Update profile picture route
     [] Get profile picture route
     [] Implement fetching current daily streak
