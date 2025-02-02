@@ -11,8 +11,8 @@ import authenticateToken from '../middleware/authenticate-token';
 import schemaValidator from '../middleware/schemaValidator';
 
 export default (router: Router): void => {
-    router.post('/register', schemaValidator('/auth/register'), register);
-    router.post('/login', schemaValidator('/auth/login'), login);
+    router.post('/auth/register', schemaValidator('/auth/register'), register);
+    router.post('/auth/login', schemaValidator('/auth/login'), login);
     router.put('/account/email', authenticateToken, updateEmail);
     router.put('/account/password', authenticateToken, updatePassword);
     router.delete('/account', authenticateToken, deleteAccount);
