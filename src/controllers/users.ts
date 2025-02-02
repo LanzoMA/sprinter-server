@@ -4,6 +4,7 @@ import {
     createUser,
     deleteUser,
     getUserByEmail,
+    getUserCourses,
     updateUserCourses,
     updateUserEmail,
     updateUserPassword,
@@ -142,6 +143,15 @@ const deleteAccount = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
+const getUserCoursesHandler = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const userToken: UserToken = req.body.user;
+    const courses = await getUserCourses(userToken.id);
+    res.json(courses);
+};
+
 const updateUserCoursesHandler = async (
     req: Request,
     res: Response
@@ -159,5 +169,6 @@ export {
     updateEmail,
     updatePassword,
     deleteAccount,
+    getUserCoursesHandler,
     updateUserCoursesHandler,
 };
