@@ -60,6 +60,10 @@ const deleteUser = async (email: string): Promise<void> => {
     }
 };
 
+const getUserCourses = async (id: string) => {
+    return await User.findById(id, { courses: 1 }).populate('courses');
+};
+
 const updateUserCourses = async (id: string, courses: Array<string>) => {
     await User.findByIdAndUpdate(id, { $set: { courses } });
 };
@@ -70,5 +74,6 @@ export {
     updateUserEmail,
     updateUserPassword,
     deleteUser,
+    getUserCourses,
     updateUserCourses,
 };
