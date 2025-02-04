@@ -1,9 +1,7 @@
 import { SearchQuery } from '../../helpers/models';
 import { Question, QuestionDocument, QuestionInput } from '../models/questions';
 
-export const createQuestion = async (
-    question: QuestionInput
-): Promise<void> => {
+const createQuestion = async (question: QuestionInput): Promise<void> => {
     try {
         await new Question(question).save();
     } catch (error) {
@@ -11,7 +9,15 @@ export const createQuestion = async (
     }
 };
 
-export const getQuestionById = async (
+const getQuestionsForUser = async (
+    user: string
+): Promise<Array<QuestionDocument>> => {
+    const questions = await Question.find().sort({ createdAt: -1 }).exec();
+
+    return questions;
+};
+
+const getQuestionById = async (
     id: string
 ): Promise<QuestionDocument | undefined> => {
     try {
@@ -51,4 +57,9 @@ const searchQuestions = async (
     return questions;
 };
 
-export { searchQuestions };
+export {
+    createQuestion,
+    getQuestionsForUser,
+    getQuestionById,
+    searchQuestions,
+};
