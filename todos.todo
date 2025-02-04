@@ -7,6 +7,5 @@ Todo:
     ✔ Implement get user courses @started(25-02-02 07:35) @done(25-02-02 07:35) @lasted(24s)
     [] Update profile picture route
     [] Get profile picture route
-    [] Implement fetching current daily streak
+    ✔ Implement fetching current daily streak @started(25-02-03 19:32) @done(25-02-04 19:42) @lasted(1d10m53s)
     [] Implement course statistics
-    [] Handle duplicate achievement names

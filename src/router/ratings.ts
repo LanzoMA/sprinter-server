@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import authenticateToken from '../middleware/authenticate-token';
 import schemaValidator from '../middleware/schemaValidator';
-import { createRatingHandler } from '../controllers/ratings';
+import {
+    createRatingHandler,
+    getDailyStreakHandler,
+} from '../controllers/ratings';
 
 export default (router: Router) => {
     router.post(
@@ -9,5 +12,10 @@ export default (router: Router) => {
         schemaValidator('/questions/:id/ratings'),
         authenticateToken,
         createRatingHandler
+    );
+    router.get(
+        '/account/daily-streak',
+        authenticateToken,
+        getDailyStreakHandler
     );
 };
