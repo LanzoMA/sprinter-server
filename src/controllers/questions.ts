@@ -2,11 +2,13 @@ import { Request, Response } from 'express';
 import {
     createQuestion,
     getQuestionById,
+    getQuestionsForUser,
     searchQuestions,
 } from '../db/services/questions';
 import { SearchQuery } from '../helpers/models';
+import { UserToken } from '../db/models/users';
 
-export const createQuestionHandler = async (
+const createQuestionHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -37,7 +39,16 @@ export const createQuestionHandler = async (
     }
 };
 
-export const getQuestionByIdHandler = async (
+const getQuestionsForUserHandler = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const userToken: UserToken = req.body.user;
+    const questions = await getQuestionsForUser(userToken.id);
+    res.json(questions);
+};
+
+const getQuestionByIdHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -52,7 +63,7 @@ export const getQuestionByIdHandler = async (
     }
 };
 
-export const searchQuestionsHandler = async (
+const searchQuestionsHandler = async (
     req: Request<{}, {}, {}, SearchQuery>,
     res: Response
 ): Promise<void> => {
@@ -65,7 +76,15 @@ export const searchQuestionsHandler = async (
     }
 };
 
-export const deleteQuestionById = async (
+const deleteQuestionByIdHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {};
+
+export {
+    createQuestionHandler,
+    getQuestionsForUserHandler,
+    getQuestionByIdHandler,
+    searchQuestionsHandler,
+    deleteQuestionByIdHandler,
+};
