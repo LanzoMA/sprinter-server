@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserToken } from '../db/models/users';
-import { createRating } from '../db/services/ratings';
+import { createRating, getDailyStreak } from '../db/services/ratings';
 
 const createRatingHandler = async (req: Request, res: Response) => {
     const user: UserToken = req.body.user;
@@ -19,4 +19,10 @@ const createRatingHandler = async (req: Request, res: Response) => {
     }
 };
 
-export { createRatingHandler };
+const getDailyStreakHandler = async (req: Request, res: Response) => {
+    const userToken: UserToken = req.body.user;
+    const streak = await getDailyStreak(userToken.id);
+    res.json({ streak });
+};
+
+export { createRatingHandler, getDailyStreakHandler };
