@@ -40,6 +40,10 @@ const userCoursesSchema = Joi.object({
     courses: Joi.array().required(),
 });
 
+const profilePictureSchema = Joi.object({
+    profilePicture: Joi.string().required(),
+});
+
 export default {
     '/auth/login': loginSchema,
     '/auth/register': registerSchema,
@@ -48,4 +52,5 @@ export default {
     '/achievements': achievementSchema,
     '/account/courses': userCoursesSchema,
     '/account/achievements': userAchievementSchema,
+    '/account/profile-picture': profilePictureSchema,
 } as { [key: string]: ObjectSchema };

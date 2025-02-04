@@ -7,5 +7,5 @@ Todo:
     ✔ Implement fetching current daily streak @started(25-02-03 19:32) @done(25-02-04 19:42) @lasted(1d10m53s)
     ✔ Implement get questions -> Get latest questions that have not been done before @started(25-02-04 10:20) @done(25-02-04 13:50) @lasted(3h30m28s)
     [] Update profile picture route @started(25-02-04 13:50)
-    ☐ Get profile picture route
+    ✔ Get profile picture route @started(25-02-04 14:39) @done(25-02-04 14:39) @lasted(7s)
     [] Implement course statistics
