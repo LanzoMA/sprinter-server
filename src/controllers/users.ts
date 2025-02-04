@@ -6,6 +6,7 @@ import {
     getProfilePicture,
     getUserByEmail,
     getUserCourses,
+    updateProfilePicture,
     updateUserCourses,
     updateUserEmail,
     updateUserPassword,
@@ -179,6 +180,18 @@ const getProfilePictureHandler = async (
     res.json({ profilePicture });
 };
 
+const updateProfilePictureHandler = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const userToken: UserToken = req.body.user;
+    const profilePicture = req.body.profilePicture;
+
+    await updateProfilePicture(userToken.id, profilePicture);
+
+    res.sendStatus(204);
+};
+
 export {
     register,
     login,
@@ -188,4 +201,5 @@ export {
     getUserCoursesHandler,
     updateUserCoursesHandler,
     getProfilePictureHandler,
+    updateProfilePictureHandler,
 };
