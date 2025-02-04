@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
     deleteAccount,
+    getProfilePictureHandler,
     getUserCoursesHandler,
     login,
     register,
@@ -23,5 +24,10 @@ export default (router: Router): void => {
         schemaValidator('/account/courses'),
         authenticateToken,
         updateUserCoursesHandler
+    );
+    router.get(
+        '/account/profile-picture',
+        authenticateToken,
+        getProfilePictureHandler
     );
 };
