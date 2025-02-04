@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import {
     createUser,
     deleteUser,
+    getProfilePicture,
     getUserByEmail,
     getUserCourses,
     updateUserCourses,
@@ -163,6 +164,21 @@ const updateUserCoursesHandler = async (
     res.sendStatus(200);
 };
 
+const getProfilePictureHandler = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const userToken: UserToken = req.body.user;
+    const profilePicture = await getProfilePicture(userToken.id);
+
+    if (!profilePicture) {
+        res.status(400).json({ error: 'Profile picture not found' });
+        return;
+    }
+
+    res.json({ profilePicture });
+};
+
 export {
     register,
     login,
@@ -171,4 +187,5 @@ export {
     deleteAccount,
     getUserCoursesHandler,
     updateUserCoursesHandler,
+    getProfilePictureHandler,
 };
