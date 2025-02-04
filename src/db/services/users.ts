@@ -75,6 +75,13 @@ const getProfilePicture = async (id: string): Promise<string | undefined> => {
     return profilePicture?.profilePicture;
 };
 
+const updateProfilePicture = async (
+    id: string,
+    profilePicture: string
+): Promise<void> => {
+    await User.findByIdAndUpdate(id, { profilePicture });
+};
+
 export {
     createUser,
     getUserByEmail,
@@ -84,4 +91,5 @@ export {
     getUserCourses,
     updateUserCourses,
     getProfilePicture,
+    updateProfilePicture,
 };
