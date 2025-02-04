@@ -68,6 +68,13 @@ const updateUserCourses = async (id: string, courses: Array<string>) => {
     await User.findByIdAndUpdate(id, { $set: { courses } });
 };
 
+const getProfilePicture = async (id: string): Promise<string | undefined> => {
+    const profilePicture = await User.findById(id, {
+        profilePicture: 1,
+    }).exec();
+    return profilePicture?.profilePicture;
+};
+
 export {
     createUser,
     getUserByEmail,
@@ -76,4 +83,5 @@ export {
     deleteUser,
     getUserCourses,
     updateUserCourses,
+    getProfilePicture,
 };

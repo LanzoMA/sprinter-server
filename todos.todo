@@ -5,7 +5,7 @@ Todo:
     ✔ Implement adding and removing user courses @started(25-01-31 10:57) @done(25-02-02 07:18) @lasted(1d20h21m48s)
     ✔ Implement get user courses @started(25-02-02 07:35) @done(25-02-02 07:35) @lasted(24s)
     ✔ Implement fetching current daily streak @started(25-02-03 19:32) @done(25-02-04 19:42) @lasted(1d10m53s)
-    [] Implement get questions -> Get latest questions that have not been done before @started(25-02-04 10:20)
-    [] Update profile picture route
-    [] Get profile picture route
+    ✔ Implement get questions -> Get latest questions that have not been done before @started(25-02-04 10:20) @done(25-02-04 13:50) @lasted(3h30m28s)
+    [] Update profile picture route @started(25-02-04 13:50)
+    ☐ Get profile picture route
     [] Implement course statistics
