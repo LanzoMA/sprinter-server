@@ -7,6 +7,7 @@ import {
     register,
     updateEmail,
     updatePassword,
+    updateProfilePictureHandler,
     updateUserCoursesHandler,
 } from '../controllers/users';
 import authenticateToken from '../middleware/authenticate-token';
@@ -29,5 +30,11 @@ export default (router: Router): void => {
         '/account/profile-picture',
         authenticateToken,
         getProfilePictureHandler
+    );
+    router.put(
+        '/account/profile-picture',
+        schemaValidator('/account/profile-picture'),
+        authenticateToken,
+        updateProfilePictureHandler
     );
 };
