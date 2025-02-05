@@ -131,6 +131,18 @@ GET /account/achievements
 POST /account/achievements
 ```
 
+### Get account profile picture
+
+```http
+GET /account/profile-picture
+```
+
+### Update account profile picture
+
+```http
+POST /account/profile-picture
+```
+
 #### Change email
 
 ```http
