@@ -57,21 +57,25 @@ GET /questions/search
 | `maxMarks`      | `integer` |                                                                                               |
 | `sortBy`        | `string`  | Sorts the posts in descending order from either `views`, `favorites`, `difficulty` or `marks` |
 
-### Favorite a question
+#### Get number of favorites on a question
+
+```http
+GET /question/:id/favorites
+```
+
+#### Favorite a question
 
 ```http
 POST /questions/:id/favorites
 ```
 
-### Unfavorite a question
+#### Unfavorite a question
 
 ```http
 DELETE /questions/:id/favorites
 ```
 
-### Comments
-
-#### Get question comments
+#### Get comments on a question
 
 ```http
 GET /questions/:id/comments
@@ -113,31 +117,73 @@ POST /achievements
 
 ### Account
 
-#### Change courses
+All account endpoints require a bearer token for access
+
+```http
+Authorization: Bearer <token>
+```
+
+#### Get account courses
+
+```http
+GET /account/courses
+```
+
+#### Change account courses
 
 ```http
 PUT /account/courses
 ```
 
-### Get all account achievements
+#### Get all account achievements
 
 ```http
 GET /account/achievements
 ```
 
-### Post a new achievement for an account
+#### Post a new achievement for an account
 
 ```http
 POST /account/achievements
 ```
 
-### Get account profile picture
+#### Get current daily streak
+
+```http
+GET /account/daily-streak
+```
+
+##### Example Response
+
+```json
+{
+    "streak": 3
+}
+```
+
+#### Get course statistics for an account
+
+```http
+GET /account/statistics
+```
+
+##### Example Response
+
+```json
+{
+    "A Level Edexcel Maths": 0.7,
+    "A Level Edexcel Further Maths": 0.3,
+    "A Level OCR Physics": 0.5
+}
+```
+
+#### Get account profile picture
 
 ```http
 GET /account/profile-picture
 ```
 
-### Update account profile picture
+#### Update account profile picture
 
 ```http
 POST /account/profile-picture
