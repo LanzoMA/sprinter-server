@@ -87,6 +87,14 @@ GET /questions/:id/comments
 POST /questions/:id/comments
 ```
 
+#### Get questions from a user
+
+```http
+GET /users/:id/questions
+```
+
+Where :id is the id of the user.
+
 ### Courses
 
 #### Get courses

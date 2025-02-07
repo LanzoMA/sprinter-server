@@ -12,6 +12,7 @@ import {
 } from '../controllers/users';
 import authenticateToken from '../middleware/authenticate-token';
 import schemaValidator from '../middleware/schemaValidator';
+import { getQuestionsFromUserHandler } from '../controllers/questions';
 
 export default (router: Router): void => {
     router.post('/auth/register', schemaValidator('/auth/register'), register);
@@ -37,4 +38,5 @@ export default (router: Router): void => {
         authenticateToken,
         updateProfilePictureHandler
     );
+    router.get('/users/:id/questions', getQuestionsFromUserHandler);
 };
