@@ -63,4 +63,25 @@ const getDailyStreak = async (user: string): Promise<number> => {
     return streak;
 };
 
-export { createRating, getDailyStreak };
+const getUserStatisticsForCourse = async (
+    user: string,
+    course: string
+): Promise<number> => {
+    const ratings = await Rating.find({ user }).populate({
+        path: 'question',
+        match: { course },
+    });
+
+    const totalMarksAchieved = ratings.reduce(
+        (acc, rating) => acc + rating.marks,
+        0
+    );
+    const totalOverallMarks = ratings.reduce(
+        (acc, rating) => acc + rating.question.totalMarks,
+        0
+    );
+
+    return totalMarksAchieved / totalOverallMarks;
+};
+
+export { createRating, getDailyStreak, getUserStatisticsForCourse };

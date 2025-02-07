@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
+import { QuestionDocument } from './questions';
 
 interface RatingInput {
     user: string;
@@ -9,7 +10,16 @@ interface RatingInput {
 
 interface RatingDocument extends Document {
     user: Schema.Types.ObjectId;
-    question: Schema.Types.ObjectId;
+    question: Schema.Types.ObjectId & QuestionDocument;
+    difficulty: number;
+    marks: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+interface QuestionPopulatedRatingDocument extends Document {
+    user: Schema.Types.ObjectId;
+    question: QuestionDocument;
     difficulty: number;
     marks: number;
     createdAt: Date;
@@ -32,4 +42,4 @@ const ratingSchema: Schema<RatingDocument> = new Schema<RatingDocument>(
 
 const Rating: Model<RatingDocument> = mongoose.model('Rating', ratingSchema);
 
-export { Rating, RatingInput };
+export { Rating, RatingInput, QuestionPopulatedRatingDocument };
