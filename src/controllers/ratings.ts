@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import { UserToken } from '../db/models/users';
-import { createRating, getDailyStreak } from '../db/services/ratings';
+import {
+    createRating,
+    getDailyStreak,
+    getUserStatisticsForCourse,
+} from '../db/services/ratings';
+import { getCourseTitleById } from '../db/services/courses';
 
 const createRatingHandler = async (req: Request, res: Response) => {
     const user: UserToken = req.body.user;
@@ -25,4 +30,35 @@ const getDailyStreakHandler = async (req: Request, res: Response) => {
     res.json({ streak });
 };
 
-export { createRatingHandler, getDailyStreakHandler };
+const getUserStatisticsForCourseHandler = async (
+    req: Request,
+    res: Response
+) => {
+    const userToken: UserToken = req.body.user;
+    const courses: Array<string> = req.body.course;
+
+    const data: Record<string, number> = {};
+
+    try {
+        courses.forEach(async (course) => {
+            const name = await getCourseTitleById(course);
+            const statistic = await getUserStatisticsForCourse(
+                userToken.id,
+                course
+            );
+
+            data[name] = statistic;
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ error });
+    }
+
+    res.json(data);
+};
+
+export {
+    createRatingHandler,
+    getDailyStreakHandler,
+    getUserStatisticsForCourseHandler,
+};
