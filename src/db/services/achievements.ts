@@ -1,5 +1,6 @@
 import { Achievement, AchievementInput } from '../models/achievements';
 
-export const createAchievement = async (achievement: AchievementInput) => {
+const createAchievement = async (achievement: AchievementInput) =>
     await new Achievement(achievement).save();
-};
+
+export { createAchievement };
