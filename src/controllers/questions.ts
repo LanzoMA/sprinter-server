@@ -3,6 +3,7 @@ import {
     createQuestion,
     getQuestionById,
     getQuestionsForUser,
+    getQuestionsFromUser,
     searchQuestions,
 } from '../db/services/questions';
 import { SearchQuery } from '../helpers/models';
@@ -81,10 +82,22 @@ const deleteQuestionByIdHandler = async (
     res: Response
 ): Promise<void> => {};
 
+const getQuestionsFromUserHandler = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const { id } = req.params;
+
+    const questions = await getQuestionsFromUser(id);
+
+    res.json(questions);
+};
+
 export {
     createQuestionHandler,
     getQuestionsForUserHandler,
     getQuestionByIdHandler,
     searchQuestionsHandler,
     deleteQuestionByIdHandler,
+    getQuestionsFromUserHandler,
 };
