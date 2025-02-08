@@ -63,6 +63,8 @@ const getDailyStreak = async (user: string): Promise<number> => {
     return streak;
 };
 
+// Calculates the percentage (ranging from 0 to 1) of the marks obtained
+// by a user relative to the total possible marks in a course, based on all completed questions.
 const getUserStatisticsForCourse = async (
     user: string,
     course: string
@@ -76,6 +78,7 @@ const getUserStatisticsForCourse = async (
         (acc, rating) => acc + rating.marks,
         0
     );
+
     const totalOverallMarks = ratings.reduce(
         (acc, rating) => acc + rating.question.totalMarks,
         0
