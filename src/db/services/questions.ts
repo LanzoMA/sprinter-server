@@ -1,5 +1,6 @@
 import { SearchQuery } from '../../helpers/models';
 import { Question, QuestionDocument, QuestionInput } from '../models/questions';
+import { Rating } from '../models/ratings';
 
 const createQuestion = async (question: QuestionInput): Promise<void> => {
     try {
@@ -12,7 +13,15 @@ const createQuestion = async (question: QuestionInput): Promise<void> => {
 const getQuestionsForUser = async (
     user: string
 ): Promise<Array<QuestionDocument>> => {
-    const questions = await Question.find().sort({ createdAt: -1 }).exec();
+    const questionsCompleted = (
+        await Rating.find({ user }, { question: 1 }).exec()
+    ).map((rating) => rating.question);
+
+    console.log(questionsCompleted);
+
+    const questions = await Question.find({ _id: { $nin: questionsCompleted } })
+        .sort({ createdAt: -1 })
+        .exec();
 
     return questions;
 };
