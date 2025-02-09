@@ -17,8 +17,6 @@ const getQuestionsForUser = async (
         await Rating.find({ user }, { question: 1 }).exec()
     ).map((rating) => rating.question);
 
-    console.log(questionsCompleted);
-
     const questions = await Question.find({ _id: { $nin: questionsCompleted } })
         .sort({ createdAt: -1 })
         .limit(10)
