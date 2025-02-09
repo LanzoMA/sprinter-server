@@ -59,7 +59,7 @@ const searchQuestions = async (
 
 const getQuestionsFromUser = async (
     user: string
-): Promise<Array<QuestionDocument>> => await Question.find({ user });
+): Promise<Array<QuestionDocument>> => await Question.find({ author: user });
 
 export {
     createQuestion,
