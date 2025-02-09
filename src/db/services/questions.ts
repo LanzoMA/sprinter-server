@@ -21,6 +21,7 @@ const getQuestionsForUser = async (
 
     const questions = await Question.find({ _id: { $nin: questionsCompleted } })
         .sort({ createdAt: -1 })
+        .limit(10)
         .exec();
 
     return questions;
