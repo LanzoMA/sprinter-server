@@ -20,13 +20,13 @@ const register = async (req: Request, res: Response): Promise<void> => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-        const user = await createUser({
+        const userToken = await createUser({
             email,
             username,
             password: hashedPassword,
         });
 
-        const accessToken = getAccessToken(user.id, user.email, user.username);
+        const accessToken = getAccessToken(userToken);
 
         res.status(201).json({ accessToken });
     } catch (error: any) {
@@ -68,7 +68,11 @@ const login = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
-        const accessToken = getAccessToken(user.id, user.email, user.username);
+        const accessToken = getAccessToken({
+            id: user.id,
+            email: user.email,
+            username: user.username,
+        });
 
         res.json({
             accessToken,
@@ -95,7 +99,11 @@ const updateEmail = async (req: Request, res: Response): Promise<void> => {
     try {
         await updateUserEmail(user.email, email);
 
-        const accessToken = getAccessToken(user.id, email, user.username);
+        const accessToken = getAccessToken({
+            id: user.id,
+            email,
+            username: user.username,
+        });
 
         res.status(201).json({ accessToken });
     } catch (error) {
