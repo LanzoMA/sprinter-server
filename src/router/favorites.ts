@@ -4,6 +4,7 @@ import {
     createFavoriteHandler,
     deleteFavoriteHandler,
     getQuestionFavoriteCountHandler,
+    isFavorited,
 } from '../controllers/favorites';
 
 export default (router: Router) => {
@@ -12,6 +13,7 @@ export default (router: Router) => {
         authenticateToken,
         createFavoriteHandler
     );
+    router.get('/questions/:id/favorited', authenticateToken, isFavorited);
     router.get(
         '/questions/:id/favorites',
         authenticateToken,

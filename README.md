@@ -63,6 +63,20 @@ GET /questions/search
 GET /question/:id/favorites
 ```
 
+#### Get is question favorited
+
+```http
+GET /question/:id/favorited
+```
+
+##### Example Response
+
+```json
+{
+    "isFavorited": false
+}
+```
+
 #### Favorite a question
 
 ```http
