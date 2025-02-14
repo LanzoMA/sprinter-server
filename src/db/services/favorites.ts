@@ -10,6 +10,15 @@ const createFavorite = async (favorite: FavoriteInput) => {
     await new Favorite(favorite).save();
 };
 
+const doesFavoriteExist = async (
+    user: string,
+    favorite: string
+): Promise<boolean> => {
+    const existingFavorite = await Favorite.findOne({ user, favorite });
+
+    return existingFavorite ? true : false;
+};
+
 const getQuestionFavoriteCount = async (question: string): Promise<number> => {
     return await Favorite.countDocuments({ question });
 };
@@ -18,4 +27,9 @@ const deleteFavorite = async (favorite: FavoriteInput) => {
     await Favorite.findOneAndDelete(favorite);
 };
 
-export { createFavorite, getQuestionFavoriteCount, deleteFavorite };
+export {
+    createFavorite,
+    doesFavoriteExist,
+    getQuestionFavoriteCount,
+    deleteFavorite,
+};
