@@ -3,6 +3,7 @@ import { UserToken } from '../db/models/users';
 import {
     createFavorite,
     deleteFavorite,
+    doesFavoriteExist,
     getQuestionFavoriteCount,
 } from '../db/services/favorites';
 
@@ -19,6 +20,18 @@ const createFavoriteHandler = async (req: Request, res: Response) => {
         if (error instanceof Error) {
             res.status(400).json({ error: error.message });
         }
+    }
+};
+
+const isFavorited = async (req: Request, res: Response): Promise<void> => {
+    const user: UserToken = req.body.user;
+    const { id } = req.params;
+
+    try {
+        const isFavorited = await doesFavoriteExist(user.id, id);
+        res.json({ isFavorited });
+    } catch (error) {
+        console.error(error);
     }
 };
 
@@ -45,6 +58,7 @@ const deleteFavoriteHandler = async (req: Request, res: Response) => {
 
 export {
     createFavoriteHandler,
+    isFavorited,
     getQuestionFavoriteCountHandler,
     deleteFavoriteHandler,
 };
