@@ -12,9 +12,9 @@ const createFavorite = async (favorite: FavoriteInput) => {
 
 const doesFavoriteExist = async (
     user: string,
-    favorite: string
+    question: string
 ): Promise<boolean> => {
-    const existingFavorite = await Favorite.findOne({ user, favorite });
+    const existingFavorite = await Favorite.findOne({ user, question });
 
     return existingFavorite ? true : false;
 };
