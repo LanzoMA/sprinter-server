@@ -1,4 +1,4 @@
-import { Comment, CommentInput } from "../models/comments";
+import { Comment, CommentInput } from '../models/comments';
 
 export const createComment = async (comment: CommentInput) => {
     await new Comment({
@@ -6,6 +6,12 @@ export const createComment = async (comment: CommentInput) => {
         question: comment.questionId,
         comment: comment.comment,
     }).save();
-}
+};
 
-export const getComments = async (question: string) => await Comment.find({ question }).exec(); 
+export const getComments = async (question: string) =>
+    await Comment.find({ question })
+        .populate({
+            path: 'user',
+            select: '-email -password -courses -createdAt -updatedAt -__v',
+        })
+        .exec();

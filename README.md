@@ -95,6 +95,8 @@ DELETE /questions/:id/favorites
 GET /questions/:id/comments
 ```
 
+-   JWT Access Token is required in Authorization header
+
 #### Create a comment on a question
 
 ```http
