@@ -17,10 +17,10 @@ const getQuestionsForUser = async (
         await Rating.find({ user }, { question: 1 }).exec()
     ).map((rating) => rating.question);
 
-    const questions = await Question.find({ _id: { $nin: questionsCompleted } })
-        .sort({ createdAt: -1 })
-        .limit(10)
-        .exec();
+    const questions = await Question.aggregate([
+        { $match: { _id: { $nin: questionsCompleted } } },
+        { $sample: { size: 10 } },
+    ]).exec();
 
     return questions;
 };
