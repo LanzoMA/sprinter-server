@@ -12,10 +12,45 @@ The server that manages the users and questions for the sprinter mobile app.
 POST /auth/login
 ```
 
+##### Example Request
+
+```json
+{
+    "email": "johndoe@example.com",
+    "password": "password"
+}
+```
+
+##### Example Response
+
+```json
+{
+    "accessToken": "<token>"
+}
+```
+
 #### Register
 
 ```http
 POST /auth/register
+```
+
+##### Example Request
+
+```json
+{
+    "email": "johndoe@example.com",
+    "username": "johndoe",
+    "password": "password"
+}
+```
+
+##### Example Response
+
+```json
+{
+    "accessToken": "<token>"
+}
 ```
 
 ### Questions
@@ -26,10 +61,54 @@ POST /auth/register
 GET /questions
 ```
 
+-   Fetches 10 recommended questions for the user that has not been completed
+-   JWT Access Token is required in Authorization header
+
+##### Example Response
+
+```json
+[
+    {
+        "_id": "<question id>",
+        "question": "<image data as 64 based string>",
+        "markScheme": "<image data as 64 based string>",
+        "course": "<course id>",
+        "title": "<title>",
+        "description": "<description>",
+        "totalMarks": 5,
+        "author": "<user id>",
+        "createdAt": "ISO Date",
+        "updatedAt": "ISO Date",
+        "__v": 0
+    }
+    // 9 More question
+]
+```
+
 #### Get a question
 
 ```http
 GET /questions/:id
+```
+
+##### Example Response
+
+```json
+[
+    {
+        "_id": "<question id>",
+        "question": "<image data as 64 based string>",
+        "markScheme": "<image data as 64 based string>",
+        "course": "<course id>",
+        "title": "<title>",
+        "description": "<description>",
+        "totalMarks": 3,
+        "author": "<user id>",
+        "createdAt": "ISO Date",
+        "updatedAt": "ISO Date",
+        "__v": 0
+    }
+]
 ```
 
 #### Post a question
@@ -38,11 +117,15 @@ GET /questions/:id
 POST /questions
 ```
 
+-   JWT Access Token is required in Authorization header
+
 #### Rate a question
 
 ```http
 POST /questions/:id/ratings
 ```
+
+-   JWT Access Token is required in Authorization header
 
 #### Search a question
 
@@ -69,6 +152,8 @@ GET /question/:id/favorites
 GET /question/:id/favorited
 ```
 
+-   JWT Access Token is required in Authorization header
+
 ##### Example Response
 
 ```json
@@ -83,11 +168,15 @@ GET /question/:id/favorited
 POST /questions/:id/favorites
 ```
 
+-   JWT Access Token is required in Authorization header
+
 #### Unfavorite a question
 
 ```http
 DELETE /questions/:id/favorites
 ```
+
+-   JWT Access Token is required in Authorization header
 
 #### Get comments on a question
 
@@ -95,13 +184,13 @@ DELETE /questions/:id/favorites
 GET /questions/:id/comments
 ```
 
--   JWT Access Token is required in Authorization header
-
 #### Create a comment on a question
 
 ```http
 POST /questions/:id/comments
 ```
+
+-   JWT Access Token is required in Authorization header
 
 #### Get questions from a user
 
@@ -119,11 +208,15 @@ Where :id is the id of the user.
 GET /courses
 ```
 
+-   JWT Access Token is required in Authorization header
+
 #### Create course
 
 ```http
 POST /courses
 ```
+
+-   JWT Access Token is required in Authorization header
 
 ### Achievements
 
@@ -133,19 +226,17 @@ POST /courses
 GET /achievements
 ```
 
+-   JWT Access Token is required in Authorization header
+
 #### Post an achievement
 
 ```http
 POST /achievements
 ```
 
+-   JWT Access Token is required in Authorization header
+
 ### Account
-
-All account endpoints require a bearer token for access
-
-```http
-Authorization: Bearer <token>
-```
 
 #### Get account courses
 
@@ -153,11 +244,15 @@ Authorization: Bearer <token>
 GET /account/courses
 ```
 
+-   JWT Access Token is required in Authorization header
+
 #### Change account courses
 
 ```http
 PUT /account/courses
 ```
+
+-   JWT Access Token is required in Authorization header
 
 #### Get all account achievements
 
@@ -165,17 +260,23 @@ PUT /account/courses
 GET /account/achievements
 ```
 
+-   JWT Access Token is required in Authorization header
+
 #### Post a new achievement for an account
 
 ```http
 POST /account/achievements
 ```
 
+-   JWT Access Token is required in Authorization header
+
 #### Get current daily streak
 
 ```http
 GET /account/daily-streak
 ```
+
+-   JWT Access Token is required in Authorization header
 
 ##### Example Response
 
@@ -190,6 +291,8 @@ GET /account/daily-streak
 ```http
 GET /account/statistics
 ```
+
+-   JWT Access Token is required in Authorization header
 
 ##### Example Response
 
@@ -207,11 +310,15 @@ GET /account/statistics
 GET /account/profile-picture
 ```
 
+-   JWT Access Token is required in Authorization header
+
 #### Update account profile picture
 
 ```http
 POST /account/profile-picture
 ```
+
+-   JWT Access Token is required in Authorization header
 
 #### Change email
 
@@ -219,14 +326,20 @@ POST /account/profile-picture
 PUT /account/email
 ```
 
+-   JWT Access Token is required in Authorization header
+
 #### Change password
 
 ```http
 PUT /account/password
 ```
 
+-   JWT Access Token is required in Authorization header
+
 #### Delete account
 
 ```http
 DELETE /account
 ```
+
+-   JWT Access Token is required in Authorization header

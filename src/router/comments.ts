@@ -11,9 +11,5 @@ export default (router: Router) => {
         authenticateToken,
         createCommentHandler
     );
-    router.get(
-        '/questions/:question/comments',
-        authenticateToken,
-        getCommentsHandler
-    );
+    router.get('/questions/:question/comments', getCommentsHandler);
 };
