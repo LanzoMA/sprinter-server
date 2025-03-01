@@ -72,14 +72,10 @@ GET /questions
         "_id": "<question id>",
         "question": "<image data as 64 based string>",
         "markScheme": "<image data as 64 based string>",
-        "course": "<course id>",
         "title": "<title>",
         "description": "<description>",
         "totalMarks": 5,
-        "author": "<user id>",
-        "createdAt": "ISO Date",
-        "updatedAt": "ISO Date",
-        "__v": 0
+        "author": "<user id>"
     }
     // 9 More question
 ]

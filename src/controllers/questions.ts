@@ -9,7 +9,7 @@ import {
 import { SearchQuery } from '../helpers/models';
 import { UserToken } from '../db/models/users';
 
-const createQuestionHandler = async (
+export const createQuestionHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -40,7 +40,7 @@ const createQuestionHandler = async (
     }
 };
 
-const getQuestionsForUserHandler = async (
+export const getQuestionsForUserHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -49,7 +49,7 @@ const getQuestionsForUserHandler = async (
     res.json(questions);
 };
 
-const getQuestionByIdHandler = async (
+export const getQuestionByIdHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -64,7 +64,7 @@ const getQuestionByIdHandler = async (
     }
 };
 
-const searchQuestionsHandler = async (
+export const searchQuestionsHandler = async (
     req: Request<{}, {}, {}, SearchQuery>,
     res: Response
 ): Promise<void> => {
@@ -77,12 +77,12 @@ const searchQuestionsHandler = async (
     }
 };
 
-const deleteQuestionByIdHandler = async (
+export const deleteQuestionByIdHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {};
 
-const getQuestionsFromUserHandler = async (
+export const getQuestionsFromUserHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -91,13 +91,4 @@ const getQuestionsFromUserHandler = async (
     const questions = await getQuestionsFromUser(id);
 
     res.json(questions);
-};
-
-export {
-    createQuestionHandler,
-    getQuestionsForUserHandler,
-    getQuestionByIdHandler,
-    searchQuestionsHandler,
-    deleteQuestionByIdHandler,
-    getQuestionsFromUserHandler,
 };

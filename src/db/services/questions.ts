@@ -20,6 +20,7 @@ const getQuestionsForUser = async (
     const questions = await Question.aggregate([
         { $match: { _id: { $nin: questionsCompleted } } },
         { $sample: { size: 10 } },
+        { $project: { __v: 0, createdAt: 0, updatedAt: 0, course: 0 } },
     ]).exec();
 
     return questions;
