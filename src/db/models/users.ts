@@ -24,8 +24,8 @@ const userSchema: Schema<UserDocument> = new Schema<UserDocument>(
         email: { type: String, required: true, unique: true },
         username: { type: String, required: true, unique: true },
         password: { type: String, required: true },
-        description: { type: String, required: true, default: '' },
-        profilePicture: { type: String, required: true, default: '' },
+        description: { type: String, default: '' },
+        profilePicture: { type: String, default: '' },
         courses: {
             type: [Schema.Types.ObjectId],
             required: true,
