@@ -1,6 +1,6 @@
 import { User, UserInput, UserToken } from '../models/users';
 
-const createUser = async (user: UserInput): Promise<UserToken> => {
+export const createUser = async (user: UserInput): Promise<UserToken> => {
     const created = await new User(user).save();
 
     return {
@@ -10,7 +10,17 @@ const createUser = async (user: UserInput): Promise<UserToken> => {
     };
 };
 
-const getUserByEmail = async (email: string) => {
+export const getUserDetailsById = async (id: string) => {
+    const user = await User.findById(id);
+
+    return {
+        username: user?.username,
+        description: user?.description,
+        profilePicture: user?.profilePicture,
+    };
+};
+
+export const getUserByEmail = async (email: string) => {
     try {
         const user = await User.findOne({ email }).exec();
 
@@ -30,7 +40,7 @@ const getUserByEmail = async (email: string) => {
     }
 };
 
-const updateUserEmail = async (
+export const updateUserEmail = async (
     email: string,
     newEmail: string
 ): Promise<void> => {
@@ -41,7 +51,7 @@ const updateUserEmail = async (
     }
 };
 
-const updateUserPassword = async (
+export const updateUserPassword = async (
     email: string,
     password: string
 ): Promise<void> => {
@@ -52,7 +62,7 @@ const updateUserPassword = async (
     }
 };
 
-const deleteUser = async (email: string): Promise<void> => {
+export const deleteUser = async (email: string): Promise<void> => {
     try {
         await User.deleteOne({ email }).exec();
     } catch (error) {
@@ -60,36 +70,26 @@ const deleteUser = async (email: string): Promise<void> => {
     }
 };
 
-const getUserCourses = async (id: string) => {
+export const getUserCourses = async (id: string) => {
     return await User.findById(id, { courses: 1 }).populate('courses');
 };
 
-const updateUserCourses = async (id: string, courses: Array<string>) => {
+export const updateUserCourses = async (id: string, courses: Array<string>) => {
     await User.findByIdAndUpdate(id, { $set: { courses } });
 };
 
-const getProfilePicture = async (id: string): Promise<string | undefined> => {
+export const getProfilePicture = async (
+    id: string
+): Promise<string | undefined> => {
     const profilePicture = await User.findById(id, {
         profilePicture: 1,
     }).exec();
     return profilePicture?.profilePicture;
 };
 
-const updateProfilePicture = async (
+export const updateProfilePicture = async (
     id: string,
     profilePicture: string
 ): Promise<void> => {
     await User.findByIdAndUpdate(id, { profilePicture });
-};
-
-export {
-    createUser,
-    getUserByEmail,
-    updateUserEmail,
-    updateUserPassword,
-    deleteUser,
-    getUserCourses,
-    updateUserCourses,
-    getProfilePicture,
-    updateProfilePicture,
 };

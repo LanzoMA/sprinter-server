@@ -6,6 +6,7 @@ import {
     getProfilePicture,
     getUserByEmail,
     getUserCourses,
+    getUserDetailsById,
     updateProfilePicture,
     updateUserCourses,
     updateUserEmail,
@@ -14,7 +15,7 @@ import {
 import { getAccessToken } from '../helpers/authenticate';
 import { UserToken } from '../db/models/users';
 
-const register = async (req: Request, res: Response): Promise<void> => {
+export const register = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -50,7 +51,7 @@ const register = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-const login = async (req: Request, res: Response): Promise<void> => {
+export const login = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
     try {
@@ -82,7 +83,10 @@ const login = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-const updateEmail = async (req: Request, res: Response): Promise<void> => {
+export const updateEmail = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
     const user: UserToken = req.body.user;
     const { email } = req.body;
 
@@ -112,7 +116,10 @@ const updateEmail = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-const updatePassword = async (req: Request, res: Response): Promise<void> => {
+export const updatePassword = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
     const { email } = req.body.user;
     const { password } = req.body;
 
@@ -141,7 +148,10 @@ const updatePassword = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-const deleteAccount = async (req: Request, res: Response): Promise<void> => {
+export const deleteAccount = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
     const { email } = req.body.user;
 
     try {
@@ -153,7 +163,7 @@ const deleteAccount = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-const getUserCoursesHandler = async (
+export const getUserCoursesHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -162,7 +172,7 @@ const getUserCoursesHandler = async (
     res.json(courses);
 };
 
-const updateUserCoursesHandler = async (
+export const updateUserCoursesHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -173,7 +183,7 @@ const updateUserCoursesHandler = async (
     res.sendStatus(200);
 };
 
-const getProfilePictureHandler = async (
+export const getProfilePictureHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -188,7 +198,7 @@ const getProfilePictureHandler = async (
     res.json({ profilePicture });
 };
 
-const updateProfilePictureHandler = async (
+export const updateProfilePictureHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -200,14 +210,17 @@ const updateProfilePictureHandler = async (
     res.sendStatus(204);
 };
 
-export {
-    register,
-    login,
-    updateEmail,
-    updatePassword,
-    deleteAccount,
-    getUserCoursesHandler,
-    updateUserCoursesHandler,
-    getProfilePictureHandler,
-    updateProfilePictureHandler,
+export const getUserDetailsHandler = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const { id } = req.params;
+
+    try {
+        const details = await getUserDetailsById(id);
+        res.json(details);
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ error });
+    }
 };

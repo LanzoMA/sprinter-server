@@ -3,6 +3,7 @@ import {
     deleteAccount,
     getProfilePictureHandler,
     getUserCoursesHandler,
+    getUserDetailsHandler,
     login,
     register,
     updateEmail,
@@ -39,4 +40,5 @@ export default (router: Router): void => {
         updateProfilePictureHandler
     );
     router.get('/users/:id/questions', getQuestionsFromUserHandler);
+    router.get('/users/:id', getUserDetailsHandler);
 };

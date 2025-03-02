@@ -90,21 +90,19 @@ GET /questions/:id
 ##### Example Response
 
 ```json
-[
-    {
-        "_id": "<question id>",
-        "question": "<image data as 64 based string>",
-        "markScheme": "<image data as 64 based string>",
-        "course": "<course id>",
-        "title": "<title>",
-        "description": "<description>",
-        "totalMarks": 3,
-        "author": "<user id>",
-        "createdAt": "ISO Date",
-        "updatedAt": "ISO Date",
-        "__v": 0
-    }
-]
+{
+    "_id": "<question id>",
+    "question": "<image data as 64 based string>",
+    "markScheme": "<image data as 64 based string>",
+    "course": "<course id>",
+    "title": "<title>",
+    "description": "<description>",
+    "totalMarks": 3,
+    "author": "<user id>",
+    "createdAt": "ISO Date",
+    "updatedAt": "ISO Date",
+    "__v": 0
+}
 ```
 
 #### Post a question
@@ -187,6 +185,22 @@ POST /questions/:id/comments
 ```
 
 -   JWT Access Token is required in Authorization header
+
+#### Get user information
+
+```http
+GET /users/:id
+```
+
+##### Example Response
+
+```json
+{
+    "username": "johndoe",
+    "description": "",
+    "profilePicture": "<image data as a 64 based string>"
+}
+```
 
 #### Get questions from a user
 
