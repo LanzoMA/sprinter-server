@@ -93,3 +93,12 @@ export const updateProfilePicture = async (
 ): Promise<void> => {
     await User.findByIdAndUpdate(id, { profilePicture });
 };
+
+export const updateProfile = async (
+    id: string,
+    username: string,
+    description: string,
+    profilePicture: string
+): Promise<void> => {
+    await User.findByIdAndUpdate(id, { username, description, profilePicture });
+};

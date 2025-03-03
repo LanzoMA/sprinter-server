@@ -48,11 +48,18 @@ const courseStatisticsSchema = Joi.object({
     courses: Joi.array<string>().required(),
 });
 
+const profileSchema = Joi.object({
+    username: Joi.string().required(),
+    description: Joi.string().allow('').required(),
+    profilePicture: Joi.string().allow('').required(),
+});
+
 export default {
     '/auth/login': loginSchema,
     '/auth/register': registerSchema,
     '/questions': questionSchema,
     '/questions/:id/ratings': ratingSchema,
+    '/users/:id': profileSchema,
     '/achievements': achievementSchema,
     '/account/courses': userCoursesSchema,
     '/account/achievements': userAchievementSchema,

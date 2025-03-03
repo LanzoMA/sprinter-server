@@ -186,6 +186,8 @@ POST /questions/:id/comments
 
 -   JWT Access Token is required in Authorization header
 
+### Users
+
 #### Get user information
 
 ```http
@@ -193,6 +195,22 @@ GET /users/:id
 ```
 
 ##### Example Response
+
+```json
+{
+    "username": "johndoe",
+    "description": "",
+    "profilePicture": "<image data as a 64 based string>"
+}
+```
+
+#### Update user information
+
+```http
+PUT /users/:id
+```
+
+##### Example Request
 
 ```json
 {

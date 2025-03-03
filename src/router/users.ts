@@ -8,6 +8,7 @@ import {
     register,
     updateEmail,
     updatePassword,
+    updateProfileHandler,
     updateProfilePictureHandler,
     updateUserCoursesHandler,
 } from '../controllers/users';
@@ -41,4 +42,9 @@ export default (router: Router): void => {
     );
     router.get('/users/:id/questions', getQuestionsFromUserHandler);
     router.get('/users/:id', getUserDetailsHandler);
+    router.put(
+        '/users/:id',
+        schemaValidator('/users/:id'),
+        updateProfileHandler
+    );
 };

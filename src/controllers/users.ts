@@ -7,6 +7,7 @@ import {
     getUserByEmail,
     getUserCourses,
     getUserDetailsById,
+    updateProfile,
     updateProfilePicture,
     updateUserCourses,
     updateUserEmail,
@@ -222,5 +223,21 @@ export const getUserDetailsHandler = async (
     } catch (error) {
         console.error(error);
         res.status(400).json({ error });
+    }
+};
+
+export const updateProfileHandler = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const { id } = req.params;
+    const { username, description, profilePicture } = req.body;
+
+    try {
+        await updateProfile(id, username, description, profilePicture);
+        res.sendStatus(204);
+    } catch (error) {
+        console.log(error);
+        res.json({ error });
     }
 };
