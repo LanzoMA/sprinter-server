@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import {
     deleteAccount,
-    getProfilePictureHandler,
     getUserCoursesHandler,
     getUserDetailsHandler,
     login,
@@ -9,7 +8,6 @@ import {
     updateEmail,
     updatePassword,
     updateProfileHandler,
-    updateProfilePictureHandler,
     updateUserCoursesHandler,
 } from '../controllers/users';
 import authenticateToken from '../middleware/authenticate-token';
@@ -28,17 +26,6 @@ export default (router: Router): void => {
         schemaValidator('/account/courses'),
         authenticateToken,
         updateUserCoursesHandler
-    );
-    router.get(
-        '/account/profile-picture',
-        authenticateToken,
-        getProfilePictureHandler
-    );
-    router.put(
-        '/account/profile-picture',
-        schemaValidator('/account/profile-picture'),
-        authenticateToken,
-        updateProfilePictureHandler
     );
     router.get('/users/:id/questions', getQuestionsFromUserHandler);
     router.get('/users/:id', getUserDetailsHandler);

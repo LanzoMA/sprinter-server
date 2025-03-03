@@ -7,9 +7,9 @@ import {
 
 export default (router: Router) => {
     router.post(
-        '/questions/:question/comments',
+        '/questions/:id/comments',
         authenticateToken,
         createCommentHandler
     );
-    router.get('/questions/:question/comments', getCommentsHandler);
+    router.get('/questions/:id/comments', getCommentsHandler);
 };

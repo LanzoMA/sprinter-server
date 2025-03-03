@@ -14,11 +14,7 @@ export default (router: Router) => {
         createFavoriteHandler
     );
     router.get('/questions/:id/favorited', authenticateToken, isFavorited);
-    router.get(
-        '/questions/:id/favorites',
-        authenticateToken,
-        getQuestionFavoriteCountHandler
-    );
+    router.get('/questions/:id/favorites', getQuestionFavoriteCountHandler);
     router.delete(
         '/questions/:id/favorites',
         authenticateToken,
