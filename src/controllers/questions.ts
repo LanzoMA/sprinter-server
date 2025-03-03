@@ -77,18 +77,11 @@ export const searchQuestionsHandler = async (
     }
 };
 
-export const deleteQuestionByIdHandler = async (
-    req: Request,
-    res: Response
-): Promise<void> => {};
-
 export const getQuestionsFromUserHandler = async (
     req: Request,
     res: Response
 ): Promise<void> => {
     const { id } = req.params;
-
     const questions = await getQuestionsFromUser(id);
-
     res.json(questions);
 };

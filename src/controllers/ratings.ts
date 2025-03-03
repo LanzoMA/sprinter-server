@@ -7,7 +7,7 @@ import {
 } from '../db/services/ratings';
 import { getCourseTitleById } from '../db/services/courses';
 
-const createRatingHandler = async (req: Request, res: Response) => {
+export const createRatingHandler = async (req: Request, res: Response) => {
     const user: UserToken = req.body.user;
     const { id } = req.params;
     const { difficulty, marks } = req.body;
@@ -18,19 +18,18 @@ const createRatingHandler = async (req: Request, res: Response) => {
     } catch (error) {
         console.error(error);
 
-        if (error instanceof Error) {
+        if (error instanceof Error)
             res.status(400).json({ error: error.message });
-        }
     }
 };
 
-const getDailyStreakHandler = async (req: Request, res: Response) => {
+export const getDailyStreakHandler = async (req: Request, res: Response) => {
     const userToken: UserToken = req.body.user;
     const streak = await getDailyStreak(userToken.id);
     res.json({ streak });
 };
 
-const getUserStatisticsForCourseHandler = async (
+export const getUserStatisticsForCourseHandler = async (
     req: Request,
     res: Response
 ) => {
@@ -49,16 +48,9 @@ const getUserStatisticsForCourseHandler = async (
 
             data[name] = statistic;
         });
+        res.json(data);
     } catch (error) {
         console.error(error);
         res.status(400).json({ error });
     }
-
-    res.json(data);
-};
-
-export {
-    createRatingHandler,
-    getDailyStreakHandler,
-    getUserStatisticsForCourseHandler,
 };

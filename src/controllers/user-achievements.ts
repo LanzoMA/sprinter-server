@@ -5,7 +5,10 @@ import {
     getUserAchievements,
 } from '../db/services/user-achievements';
 
-const createUserAchievementHandler = async (req: Request, res: Response) => {
+export const createUserAchievementHandler = async (
+    req: Request,
+    res: Response
+) => {
     const userToken: UserToken = req.body.user;
     const achievement: string = req.body.achievement;
 
@@ -18,10 +21,11 @@ const createUserAchievementHandler = async (req: Request, res: Response) => {
     }
 };
 
-const getUserAchievementsHandler = async (req: Request, res: Response) => {
+export const getUserAchievementsHandler = async (
+    req: Request,
+    res: Response
+) => {
     const userToken: UserToken = req.body.user;
     const achievements = await getUserAchievements(userToken.id);
     res.json({ achievements });
 };
-
-export { createUserAchievementHandler, getUserAchievementsHandler };

@@ -7,7 +7,7 @@ import {
     getQuestionFavoriteCount,
 } from '../db/services/favorites';
 
-const createFavoriteHandler = async (req: Request, res: Response) => {
+export const createFavoriteHandler = async (req: Request, res: Response) => {
     const user: UserToken = req.body.user;
     const { id } = req.params;
 
@@ -23,7 +23,10 @@ const createFavoriteHandler = async (req: Request, res: Response) => {
     }
 };
 
-const isFavorited = async (req: Request, res: Response): Promise<void> => {
+export const isFavorited = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
     const user: UserToken = req.body.user;
     const { id } = req.params;
 
@@ -35,15 +38,16 @@ const isFavorited = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-const getQuestionFavoriteCountHandler = async (req: Request, res: Response) => {
+export const getQuestionFavoriteCountHandler = async (
+    req: Request,
+    res: Response
+) => {
     const { id } = req.params;
-
     const count = await getQuestionFavoriteCount(id);
-
     res.json({ count });
 };
 
-const deleteFavoriteHandler = async (req: Request, res: Response) => {
+export const deleteFavoriteHandler = async (req: Request, res: Response) => {
     const user: UserToken = req.body.user;
     const { id } = req.params;
 
@@ -54,11 +58,4 @@ const deleteFavoriteHandler = async (req: Request, res: Response) => {
         console.error(error);
         res.status(400).json({ error });
     }
-};
-
-export {
-    createFavoriteHandler,
-    isFavorited,
-    getQuestionFavoriteCountHandler,
-    deleteFavoriteHandler,
 };

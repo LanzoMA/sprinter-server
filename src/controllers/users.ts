@@ -2,16 +2,14 @@ import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import {
     createUser,
-    deleteUser,
-    getProfilePicture,
+    deleteUserById,
     getUserByEmail,
     getUserCourses,
     getUserDetailsById,
     updateProfile,
-    updateProfilePicture,
     updateUserCourses,
-    updateUserEmail,
-    updateUserPassword,
+    updateUserEmailById,
+    updateUserPasswordById,
 } from '../db/services/users';
 import { getAccessToken } from '../helpers/authenticate';
 import { UserToken } from '../db/models/users';
@@ -76,9 +74,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             username: user.username,
         });
 
-        res.json({
-            accessToken,
-        });
+        res.json({ accessToken });
     } catch (error) {
         console.error(error);
     }
@@ -91,18 +87,15 @@ export const updateEmail = async (
     const user: UserToken = req.body.user;
     const { email } = req.body;
 
-    if (!email) {
-        res.status(400).send('Email was not provided');
-        return;
-    }
-
     if (email === user.email) {
-        res.status(400).send('New email is the same as the old email');
+        res.status(400).json({
+            error: 'New email is the same as the old email',
+        });
         return;
     }
 
     try {
-        await updateUserEmail(user.email, email);
+        await updateUserEmailById(user.id, email);
 
         const accessToken = getAccessToken({
             id: user.id,
@@ -121,28 +114,13 @@ export const updatePassword = async (
     req: Request,
     res: Response
 ): Promise<void> => {
-    const { email } = req.body.user;
+    const userToken: UserToken = req.body.user;
     const { password } = req.body;
-
-    const user = await getUserByEmail(email);
-
-    if (!user) {
-        res.status(400).send('User not found');
-        return;
-    }
-
-    const isPasswordSame = await bcrypt.compare(password, user.password);
-
-    if (isPasswordSame) {
-        res.status(400).send('New password is the same as the old password');
-        return;
-    }
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-        await updateUserPassword(email, hashedPassword);
-        res.status(201).send('Successfully updated password');
+        await updateUserPasswordById(userToken.id, hashedPassword);
+        res.sendStatus(200);
     } catch (error) {
         console.error(error);
         res.status(400).send('Error updating password');
@@ -153,10 +131,10 @@ export const deleteAccount = async (
     req: Request,
     res: Response
 ): Promise<void> => {
-    const { email } = req.body.user;
+    const userToken: UserToken = req.body.user;
 
     try {
-        await deleteUser(email);
+        await deleteUserById(userToken.id);
         res.sendStatus(204);
     } catch (error) {
         console.error(error);
@@ -182,33 +160,6 @@ export const updateUserCoursesHandler = async (
 
     await updateUserCourses(userToken.id, courses);
     res.sendStatus(200);
-};
-
-export const getProfilePictureHandler = async (
-    req: Request,
-    res: Response
-): Promise<void> => {
-    const userToken: UserToken = req.body.user;
-    const profilePicture = await getProfilePicture(userToken.id);
-
-    if (!profilePicture) {
-        res.status(400).json({ error: 'Profile picture not found' });
-        return;
-    }
-
-    res.json({ profilePicture });
-};
-
-export const updateProfilePictureHandler = async (
-    req: Request,
-    res: Response
-): Promise<void> => {
-    const userToken: UserToken = req.body.user;
-    const profilePicture = req.body.profilePicture;
-
-    await updateProfilePicture(userToken.id, profilePicture);
-
-    res.sendStatus(204);
 };
 
 export const getUserDetailsHandler = async (
@@ -246,6 +197,6 @@ export const updateProfileHandler = async (
         res.json({ accessToken });
     } catch (error) {
         console.log(error);
-        res.json({ error });
+        res.status(400).json({ error });
     }
 };
