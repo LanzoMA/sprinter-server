@@ -1,25 +1,18 @@
 import { isSameDate, toDateFormat } from '../../helpers/date';
 import { Rating, RatingInput } from '../models/ratings';
 
-const createRating = async (rating: RatingInput) => {
-    const existingRating = await Rating.findOne({
+export const createRating = async (rating: RatingInput) => {
+    const existingRating = await Rating.exists({
         user: rating.user,
         question: rating.question,
     }).exec();
 
-    if (existingRating) {
-        throw new Error('Rating already exists');
-    }
+    if (existingRating) throw new Error('Rating already exists');
 
-    await new Rating({
-        user: rating.user,
-        question: rating.question,
-        difficulty: rating.difficulty,
-        marks: rating.marks,
-    }).save();
+    await new Rating(rating).save();
 };
 
-const getDailyStreak = async (user: string): Promise<number> => {
+export const getDailyStreak = async (user: string): Promise<number> => {
     const ratings = await Rating.find({ user }, { _id: 0, createdAt: 1 }).sort({
         createdAt: -1,
     });
@@ -65,7 +58,7 @@ const getDailyStreak = async (user: string): Promise<number> => {
 
 // Calculates the percentage (ranging from 0 to 1) of the marks obtained
 // by a user relative to the total possible marks in a course, based on all completed questions.
-const getUserStatisticsForCourse = async (
+export const getUserStatisticsForCourse = async (
     user: string,
     course: string
 ): Promise<number> => {
@@ -86,5 +79,3 @@ const getUserStatisticsForCourse = async (
 
     return totalMarksAchieved / totalOverallMarks;
 };
-
-export { createRating, getDailyStreak, getUserStatisticsForCourse };

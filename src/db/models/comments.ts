@@ -1,8 +1,8 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
 
 interface CommentInput {
-    userId: string;
-    questionId: string;
+    user: string;
+    question: string;
     comment: string;
 }
 

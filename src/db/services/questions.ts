@@ -2,15 +2,13 @@ import { SearchQuery } from '../../helpers/models';
 import { Question, QuestionDocument, QuestionInput } from '../models/questions';
 import { Rating } from '../models/ratings';
 
-const createQuestion = async (question: QuestionInput): Promise<void> => {
-    try {
-        await new Question(question).save();
-    } catch (error) {
-        console.error('Error creating question', error);
-    }
+export const createQuestion = async (
+    question: QuestionInput
+): Promise<void> => {
+    await new Question(question).save();
 };
 
-const getQuestionsForUser = async (
+export const getQuestionsForUser = async (
     user: string
 ): Promise<Array<QuestionDocument>> => {
     const questionsCompleted = (
@@ -26,23 +24,11 @@ const getQuestionsForUser = async (
     return questions;
 };
 
-const getQuestionById = async (
+export const getQuestionById = async (
     id: string
-): Promise<QuestionDocument | undefined> => {
-    try {
-        const question = await Question.findById(id);
+): Promise<QuestionDocument | null> => await Question.findById(id);
 
-        if (!question) {
-            throw Error('Question not found');
-        }
-
-        return question;
-    } catch (error) {
-        console.error('Error getting question:', error);
-    }
-};
-
-const searchQuestions = async (
+export const searchQuestions = async (
     searchQuery: SearchQuery
 ): Promise<Array<QuestionDocument>> => {
     const match: { [key: string]: any } = {};
@@ -66,14 +52,6 @@ const searchQuestions = async (
     return questions;
 };
 
-const getQuestionsFromUser = async (
+export const getQuestionsFromUser = async (
     user: string
 ): Promise<Array<QuestionDocument>> => await Question.find({ author: user });
-
-export {
-    createQuestion,
-    getQuestionsForUser,
-    getQuestionById,
-    searchQuestions,
-    getQuestionsFromUser,
-};
