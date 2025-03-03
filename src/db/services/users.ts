@@ -35,6 +35,16 @@ export const getUserByEmail = async (email: string) => {
     };
 };
 
+export const getUserCoursesById = async (
+    id: string
+): Promise<Array<string>> => {
+    const courses = await User.findById(id, { _id: 0, courses: 1 }).exec();
+
+    if (!courses) throw new Error('Courses not found');
+
+    return courses.courses.map((course) => course.toString());
+};
+
 export const updateUserEmailById = async (
     id: string,
     email: string

@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { isSameDate, toDateFormat } from '../../helpers/date';
 import { Rating, RatingInput } from '../models/ratings';
 
@@ -73,9 +74,9 @@ export const getUserStatisticsForCourse = async (
     );
 
     const totalOverallMarks = ratings.reduce(
-        (acc, rating) => acc + rating.question.totalMarks,
+        (acc, rating) => acc + (rating.question?.totalMarks || 0),
         0
     );
 
-    return totalMarksAchieved / totalOverallMarks;
+    return totalOverallMarks && totalMarksAchieved / totalOverallMarks;
 };

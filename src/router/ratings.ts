@@ -21,7 +21,6 @@ export default (router: Router) => {
     );
     router.get(
         '/account/statistics',
-        schemaValidator('/account/statistics'),
         authenticateToken,
         getUserStatisticsForCourseHandler
     );
