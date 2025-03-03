@@ -46,7 +46,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             }
         }
 
-        res.status(500).send('Something went wrong. Please try again later.');
+        res.status(500).json({
+            error: 'Something went wrong. Please try again later.',
+        });
     }
 };
 
@@ -57,14 +59,14 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         const user = await getUserByEmail(email);
 
         if (!user) {
-            res.status(401).send('Credentials were incorrect');
+            res.status(401).json({ error: 'Credentials were incorrect' });
             return;
         }
 
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
         if (!isPasswordCorrect) {
-            res.status(401).send('Credentials were incorrect');
+            res.status(401).send({ error: 'Credentials were incorrect' });
             return;
         }
 
