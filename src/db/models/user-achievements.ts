@@ -8,8 +8,6 @@ interface UserAchievementInput {
 interface UserAchievementDocument extends Document {
     user: Schema.Types.ObjectId;
     achievement: Schema.Types.ObjectId;
-    createdAt: Date;
-    updatedAt: Date;
 }
 
 const userAchievementSchema: Schema<UserAchievementDocument> =

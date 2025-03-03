@@ -11,7 +11,6 @@ interface QuestionInput {
 }
 
 interface QuestionDocument extends Document {
-    _id: string;
     question: string;
     markScheme: string;
     title: string;
@@ -19,8 +18,6 @@ interface QuestionDocument extends Document {
     course: string;
     totalMarks: number;
     author: string;
-    createdAt: Date;
-    updatedAt: Date;
 }
 
 const questionSchema = new Schema(
@@ -29,7 +26,7 @@ const questionSchema = new Schema(
         markScheme: { type: String, required: true },
         course: { type: Schema.Types.ObjectId, required: true },
         title: { type: String, required: true },
-        description: { type: String },
+        description: { type: String, default: '' },
         totalMarks: { type: Number, required: true },
         author: { type: Schema.Types.ObjectId, required: true },
     },

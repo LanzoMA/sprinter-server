@@ -12,11 +12,13 @@ interface UserToken {
     username: string;
 }
 
-interface UserDocument extends Document, UserInput {
+interface UserDocument extends Document {
+    email: string;
+    username: string;
+    password: string;
     description: string;
     profilePicture?: string;
     courses: [Schema.Types.ObjectId];
-    createdAt: Date;
 }
 
 const userSchema: Schema<UserDocument> = new Schema<UserDocument>(
