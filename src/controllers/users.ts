@@ -231,11 +231,19 @@ export const updateProfileHandler = async (
     res: Response
 ): Promise<void> => {
     const { id } = req.params;
+    const userToken: UserToken = req.body.user;
     const { username, description, profilePicture } = req.body;
 
     try {
         await updateProfile(id, username, description, profilePicture);
-        res.sendStatus(204);
+
+        const accessToken = getAccessToken({
+            id,
+            username,
+            email: userToken.email,
+        });
+
+        res.json({ accessToken });
     } catch (error) {
         console.log(error);
         res.json({ error });

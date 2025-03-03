@@ -45,6 +45,7 @@ export default (router: Router): void => {
     router.put(
         '/users/:id',
         schemaValidator('/users/:id'),
+        authenticateToken,
         updateProfileHandler
     );
 };
