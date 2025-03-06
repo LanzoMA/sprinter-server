@@ -69,7 +69,7 @@ export const getUserStatisticsForCourse = async (
     });
 
     const totalMarksAchieved = ratings.reduce(
-        (acc, rating) => acc + rating.marks,
+        (acc, rating) => acc + (rating.question ? rating.marks : 0),
         0
     );
 
