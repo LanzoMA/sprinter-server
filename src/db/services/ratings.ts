@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { isSameDate, toDateFormat } from '../../helpers/date';
 import { Rating, RatingInput } from '../models/ratings';
 
@@ -11,6 +10,10 @@ export const createRating = async (rating: RatingInput) => {
     if (existingRating) throw new Error('Rating already exists');
 
     await new Rating(rating).save();
+};
+
+export const getRatingCountForUser = async (user: string): Promise<number> => {
+    return await Rating.countDocuments({ user });
 };
 
 export const getDailyStreak = async (user: string): Promise<number> => {
