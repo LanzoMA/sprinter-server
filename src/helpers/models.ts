@@ -1,6 +1,6 @@
 interface SearchQuery {
     course?: string;
-    difficulty?: number;
+    difficulty?: string;
     minMarks?: number;
     maxMarks?: number;
     sortBy?: string;

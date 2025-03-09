@@ -154,14 +154,13 @@ A question was successfully uploaded
 GET /questions/search
 ```
 
-| Query Parameter | Type      | Description                                                                                   |
-| :-------------- | :-------- | :-------------------------------------------------------------------------------------------- |
-| `difficulty`    | `integer` | Either 0, 1, 2 or 3 (easy, ok, medium or hard)                                                |
-| `minMarks`      | `integer` |                                                                                               |
-| `maxMarks`      | `integer` |                                                                                               |
-| `sortBy`        | `string`  | Sorts the posts in descending order from either `views`, `favorites`, `difficulty` or `marks` |
+###### Request Example
 
-sortBy does not work yet
+```http
+GET /questions/search?minMarks=5&maxMarks=6&difficulty=2
+```
+
+Only returns questions that are between 5 and 6 marks and are of medium difficulty
 
 ##### Response Example
 

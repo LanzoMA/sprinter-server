@@ -71,19 +71,19 @@ export const searchQuestions = async (
             );
 
             switch (searchQuery.difficulty) {
-                case 0:
+                case '0':
                     if (averageDifficulty <= 0.5)
                         filteredQuestions.push(question);
                     break;
-                case 1:
+                case '1':
                     if (averageDifficulty > 0.5 && averageDifficulty <= 1.5)
                         filteredQuestions.push(question);
                     break;
-                case 2:
+                case '2':
                     if (averageDifficulty > 1.5 && averageDifficulty <= 2.5)
                         filteredQuestions.push(question);
                     break;
-                case 3:
+                case '3':
                     if (averageDifficulty > 2.5 && averageDifficulty <= 3.5)
                         filteredQuestions.push(question);
                     break;
