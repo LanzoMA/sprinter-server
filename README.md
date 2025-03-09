@@ -156,10 +156,12 @@ GET /questions/search
 
 | Query Parameter | Type      | Description                                                                                   |
 | :-------------- | :-------- | :-------------------------------------------------------------------------------------------- |
-| `difficulty`    | `string`  | Either `easy`, `ok`, `medium` or `hard`                                                       |
+| `difficulty`    | `integer` | Either 0, 1, 2 or 3 (easy, ok, medium or hard)                                                |
 | `minMarks`      | `integer` |                                                                                               |
 | `maxMarks`      | `integer` |                                                                                               |
 | `sortBy`        | `string`  | Sorts the posts in descending order from either `views`, `favorites`, `difficulty` or `marks` |
+
+sortBy does not work yet
 
 ##### Response Example
 

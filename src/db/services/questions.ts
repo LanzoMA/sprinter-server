@@ -1,6 +1,7 @@
 import { SearchQuery } from '../../helpers/models';
 import { Question, QuestionDocument, QuestionInput } from '../models/questions';
 import { Rating } from '../models/ratings';
+import { getAverageDifficultyOfQuestion } from './ratings';
 import { getUserCourses } from './users';
 
 export const createQuestion = async (
@@ -59,9 +60,42 @@ export const searchQuestions = async (
         ? (sort['totalMarks'] = -1)
         : (sort['createdAt'] = -1);
 
-    const questions = await Question.find(match).sort(sort).limit(10);
+    let questions = await Question.find(match).sort(sort);
 
-    return questions;
+    if (searchQuery.difficulty) {
+        const filteredQuestions = [];
+
+        for (const question of questions) {
+            const averageDifficulty = await getAverageDifficultyOfQuestion(
+                question._id as string
+            );
+
+            switch (searchQuery.difficulty) {
+                case 0:
+                    if (averageDifficulty <= 0.5)
+                        filteredQuestions.push(question);
+                    break;
+                case 1:
+                    if (averageDifficulty > 0.5 && averageDifficulty <= 1.5)
+                        filteredQuestions.push(question);
+                    break;
+                case 2:
+                    if (averageDifficulty > 1.5 && averageDifficulty <= 2.5)
+                        filteredQuestions.push(question);
+                    break;
+                case 3:
+                    if (averageDifficulty > 2.5 && averageDifficulty <= 3.5)
+                        filteredQuestions.push(question);
+                    break;
+                default:
+                    throw new Error('Invalid value for difficulty was given');
+            }
+        }
+
+        questions = filteredQuestions;
+    }
+
+    return questions.slice(0, 10);
 };
 
 export const getQuestionsFromUser = async (

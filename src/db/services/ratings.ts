@@ -16,6 +16,19 @@ export const getRatingCountForUser = async (user: string): Promise<number> => {
     return await Rating.countDocuments({ user });
 };
 
+export const getAverageDifficultyOfQuestion = async (question: string) => {
+    const ratings = await Rating.find({ question });
+
+    const totalDifficulty = ratings.reduce(
+        (acc, rating) => acc + rating.difficulty,
+        0
+    );
+
+    const averageDifficulty = totalDifficulty / ratings.length;
+
+    return averageDifficulty;
+};
+
 export const getDailyStreak = async (user: string): Promise<number> => {
     const ratings = await Rating.find({ user }, { _id: 0, createdAt: 1 }).sort({
         createdAt: -1,
