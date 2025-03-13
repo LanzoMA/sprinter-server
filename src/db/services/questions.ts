@@ -38,7 +38,7 @@ export const getQuestionsForUser = async (
     ]).exec();
 
     const filteredQuestions = [];
-    const markPercentageDeviation = 0.2;
+    const markPercentageDeviation = 0.5;
 
     for (const question of questions) {
         if (filteredQuestions.length >= 10) break;

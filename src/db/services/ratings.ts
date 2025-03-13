@@ -102,6 +102,8 @@ export const getAverageMarkPercentageOfQuestion = async (
 ): Promise<number> => {
     const ratings = await Rating.find({ question }).populate('question');
 
+    if (ratings.length === 0) return 0.5;
+
     const totalMarksAchieved = ratings.reduce(
         (acc, rating) => acc + rating.marks,
         0
