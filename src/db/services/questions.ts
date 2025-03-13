@@ -62,7 +62,7 @@ export const getQuestionsForUser = async (
         filteredQuestions.push(question);
     }
 
-    return questions;
+    return filteredQuestions;
 };
 
 export const getQuestionById = async (
