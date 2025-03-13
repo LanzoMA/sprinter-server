@@ -48,7 +48,7 @@ export const getQuestionsForUser = async (
             question.course
         );
         const averageMarkPercentage = await getAverageMarkPercentageOfQuestion(
-            question.id
+            question._id as string
         );
 
         const markPercentageLowerLimit =
