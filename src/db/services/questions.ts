@@ -1,7 +1,11 @@
 import { SearchQuery } from '../../helpers/models';
 import { Question, QuestionDocument, QuestionInput } from '../models/questions';
 import { Rating } from '../models/ratings';
-import { getAverageDifficultyOfQuestion } from './ratings';
+import {
+    getAverageDifficultyOfQuestion,
+    getAverageMarkPercentageOfQuestion,
+    getUserStatisticsForCourse,
+} from './ratings';
 import { getUserCourses } from './users';
 
 export const createQuestion = async (
@@ -23,16 +27,40 @@ export const getQuestionsForUser = async (
         await Rating.find({ user }, { question: 1 }).exec()
     ).map((rating) => rating.question);
 
-    const questions = await Question.aggregate([
+    const questions: Array<QuestionDocument> = await Question.aggregate([
         {
             $match: {
                 _id: { $nin: questionsCompleted },
                 course: { $in: userCourses },
             },
         },
-        { $sample: { size: 10 } },
         { $project: { __v: 0, createdAt: 0, updatedAt: 0, course: 0 } },
     ]).exec();
+
+    const filteredQuestions = [];
+    const markPercentageDeviation = 0.2;
+
+    for (const question of questions) {
+        if (filteredQuestions.length >= 10) break;
+
+        const userMarkPercentage = await getUserStatisticsForCourse(
+            user,
+            question.course
+        );
+        const averageMarkPercentage = await getAverageMarkPercentageOfQuestion(
+            question.id
+        );
+
+        const markPercentageLowerLimit =
+            1 - userMarkPercentage - markPercentageDeviation;
+        const markPercentageUpperLimit =
+            1 - userMarkPercentage + markPercentageDeviation;
+
+        if (averageMarkPercentage < markPercentageLowerLimit) continue;
+        if (averageMarkPercentage > markPercentageUpperLimit) continue;
+
+        filteredQuestions.push(question);
+    }
 
     return questions;
 };

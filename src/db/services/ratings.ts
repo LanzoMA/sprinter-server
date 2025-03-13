@@ -96,3 +96,17 @@ export const getUserStatisticsForCourse = async (
 
     return totalOverallMarks && totalMarksAchieved / totalOverallMarks;
 };
+
+export const getAverageMarkPercentageOfQuestion = async (
+    question: string
+): Promise<number> => {
+    const ratings = await Rating.find({ question }).populate('question');
+
+    const totalMarksAchieved = ratings.reduce(
+        (acc, rating) => acc + rating.marks,
+        0
+    );
+    const totalMarksOverall = ratings[0].question.totalMarks * ratings.length;
+
+    return totalMarksAchieved / totalMarksOverall;
+};
