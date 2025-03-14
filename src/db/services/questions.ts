@@ -27,12 +27,17 @@ export const getQuestionsForUser = async (
         await Rating.find({ user }, { question: 1 }).exec()
     ).map((rating) => rating.question);
 
+    const totalQuestions = await Question.countDocuments();
+
     const questions: Array<QuestionDocument> = await Question.aggregate([
         {
             $match: {
                 _id: { $nin: questionsCompleted },
                 course: { $in: userCourses },
             },
+        },
+        {
+            $sample: { size: totalQuestions },
         },
         { $project: { __v: 0, createdAt: 0, updatedAt: 0, course: 0 } },
     ]).exec();
@@ -41,18 +46,20 @@ export const getQuestionsForUser = async (
     const markPercentageDeviation = 0.5;
 
     for (const question of questions) {
-        if (filteredQuestions.length >= 10) break;
+        if (filteredQuestions.length >= 8) break;
 
         const userMarkPercentage = await getUserStatisticsForCourse(
             user,
             question.course
         );
+
         const averageMarkPercentage = await getAverageMarkPercentageOfQuestion(
             question._id as string
         );
 
         const markPercentageLowerLimit =
             1 - userMarkPercentage - markPercentageDeviation;
+
         const markPercentageUpperLimit =
             1 - userMarkPercentage + markPercentageDeviation;
 
